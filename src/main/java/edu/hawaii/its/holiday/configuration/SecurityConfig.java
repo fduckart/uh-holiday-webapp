@@ -143,10 +143,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilter(casAuthenticationFilter());
         http.exceptionHandling()
                 .authenticationEntryPoint(casProcessingFilterEntryPoint());
-
+        http.csrf().disable();
         http.authorizeRequests()
-                .antMatchers("/resources/**").permitAll()
                 .antMatchers("/").permitAll()
+                .antMatchers("/api/**").permitAll()
+                .antMatchers("/resources/**").permitAll()
                 .antMatchers("/gate").permitAll()
                 .antMatchers("/contact").permitAll()
                 .antMatchers("/faq").permitAll()
