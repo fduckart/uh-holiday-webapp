@@ -1,7 +1,7 @@
 <%@ taglib prefix="c"     uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="holidayApp">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,6 +12,10 @@
     <link rel="stylesheet" href="<c:url value="/resources/styles/app-main-001.css" />"   type="text/css" media="screen" />
     <link rel="stylesheet" href="<c:url value="/resources/styles/app-header-001.css" />" type="text/css" media="screen" />
     <link rel="stylesheet" href="<c:url value="/resources/styles/app-footer-001.css" />" type="text/css" media="screen" />
+    <script type="text/javascript" src="<c:url value="/resources/angular-1.5.8/angular.min.js" />"></script>
+    <script type="text/javascript" src="<c:url value="/resources/javascript/holiday.app.js" />"></script>
+    <script type="text/javascript" src="<c:url value="/resources/javascript/holiday.service.js" />"></script>
+    <script type="text/javascript" src="<c:url value="/resources/javascript/holiday.controller.js" />"></script>           
 </head>
 <body>
     <tiles:insertAttribute name="header" />
