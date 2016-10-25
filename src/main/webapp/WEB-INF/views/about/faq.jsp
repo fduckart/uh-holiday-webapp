@@ -30,20 +30,6 @@
                         <td colspan="2" align="left" valign="top"><b>General Questions</b></td>
                     </tr>
                     <tr>
-                        <td align="left" valign="top">Q: Where can I find the UH login documentation.</td>
-                        <td align="left" valign="top">
-                            A: You can find it at the
-                            <a href="https://www.hawaii.edu/bwiki/x/bw25DQ" target="_iam_docs">UH Identity Access Management wiki site.</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="left" valign="top">Q: What is the story on the UH Number?</td>
-                        <td align="left" valign="top">
-                            A: The UH Number -- and most of the attributes -- returned in a CAS response are restriced by UH policy.
-                            Be careful not to display them on any public-facing pages.
-                        </td>
-                    </tr>
-                    <tr>
                         <td align="left" valign="top">Q: Who can  answer some basic questions about the application?</td>
                         <td align="left" valign="top">A: Send an email to <a href="mailto:duckart@hawaii.edu">Frank Duckart</a></td>
                     </tr>

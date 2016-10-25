@@ -38,10 +38,7 @@ public class ActionListenerImpl implements ActionListener {
             synchronized (actionMap) {
                 if (actionMap.isEmpty()) {
                     List<Action> actions = actionService.findActions();
-                    for (Action a : actions) {
-                        logger.debug("> loading action: " + a);
-                        actionMap.put(a.getCode(), a);
-                    }
+                    actions.forEach(a -> actionMap.put(a.getCode(), a));
                 }
             }
         } catch (Exception e) {
@@ -55,7 +52,7 @@ public class ActionListenerImpl implements ActionListener {
     public void onApplicationEvent(ActionEvent event) {
         try {
             Action action = actionMap.get(event.getCode());
-            if (action != null && action.isEnabled()) {
+            if (action != null && action.isEnabledX()) {
                 ActionLog actionEntry = new ActionLog();
                 actionEntry.setActionId(action.getId());
                 actionEntry.setUserUhuuid(event.getUhuuid());

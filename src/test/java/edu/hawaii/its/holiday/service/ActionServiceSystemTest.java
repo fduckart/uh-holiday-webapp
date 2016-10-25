@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import edu.hawaii.its.holiday.configuration.CachingConfig;
 import edu.hawaii.its.holiday.configuration.DatabaseConfig;
 import edu.hawaii.its.holiday.configuration.WebConfig;
-import edu.hawaii.its.holiday.service.ActionService;
 import edu.hawaii.its.holiday.type.ActionLog;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -48,5 +47,4 @@ public class ActionServiceSystemTest {
 
         assertEquals(count + RUNS, actionService.logCount());
     }
-
 }

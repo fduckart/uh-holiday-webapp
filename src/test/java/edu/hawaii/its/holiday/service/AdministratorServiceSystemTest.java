@@ -13,8 +13,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import edu.hawaii.its.holiday.configuration.CachingConfig;
 import edu.hawaii.its.holiday.configuration.DatabaseConfig;
 import edu.hawaii.its.holiday.configuration.WebConfig;
-import edu.hawaii.its.holiday.service.AdministratorService;
-import edu.hawaii.its.holiday.service.AdministratorServiceImpl;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration

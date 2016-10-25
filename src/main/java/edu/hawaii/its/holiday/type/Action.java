@@ -60,7 +60,7 @@ public class Action implements Serializable {
     }
 
     @Transient
-    public boolean isEnabled() {
+    public boolean isEnabledX() {
         return "Y".equals(enabled);
     }
 

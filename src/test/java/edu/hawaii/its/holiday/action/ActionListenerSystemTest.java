@@ -1,6 +1,7 @@
 package edu.hawaii.its.holiday.action;
 
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,6 +24,6 @@ public class ActionListenerSystemTest {
 
     @Test
     public void mapNotEmpty() {
-        assertTrue(actionListener.mapSize() > 0);
+        assertThat(actionListener.mapSize(), equalTo(12));
     }
 }
