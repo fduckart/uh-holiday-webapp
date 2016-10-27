@@ -10,6 +10,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "holiday")
 public class Holiday implements Serializable {
@@ -20,6 +22,7 @@ public class Holiday implements Serializable {
     @Column(name = "id")
     private Integer id;
 
+    @JsonIgnore
     @Column(name = "version")
     private Integer version;
 
@@ -27,11 +30,11 @@ public class Holiday implements Serializable {
     private String description;
 
     @Column(name = "observed_date")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date observedDate;
 
     @Column(name = "official_date")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date officialDate;
 
     public Integer getId() {
@@ -58,6 +61,22 @@ public class Holiday implements Serializable {
         this.description = description;
     }
 
+    public Date getObservedDate() {
+        return observedDate;
+    }
+
+    public void setObservedDate(Date observedDate) {
+        this.observedDate = observedDate;
+    }
+
+    public Date getOfficialDate() {
+        return officialDate;
+    }
+
+    public void setOfficialDate(Date officialDate) {
+        this.officialDate = officialDate;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -66,7 +85,6 @@ public class Holiday implements Serializable {
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((observedDate == null) ? 0 : observedDate.hashCode());
         result = prime * result + ((officialDate == null) ? 0 : officialDate.hashCode());
-        result = prime * result + ((version == null) ? 0 : version.hashCode());
         return result;
     }
 
@@ -99,20 +117,13 @@ public class Holiday implements Serializable {
                 return false;
         } else if (!officialDate.equals(other.officialDate))
             return false;
-        if (version == null) {
-            if (other.version != null)
-                return false;
-        } else if (!version.equals(other.version))
-            return false;
         return true;
     }
 
     @Override
     public String toString() {
         return "Holiday [ "
-                + "id=" + id
-                + ", version=" + version
-                + ", description=" + description
+                + "description=" + description
                 + ", observedDate=" + observedDate
                 + ", officialDate=" + officialDate
                 + "]";

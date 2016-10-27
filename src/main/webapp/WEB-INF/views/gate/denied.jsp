@@ -1,7 +1,7 @@
 <div class='container-fluid'>
     <div class='row'>
         <div class='col-xs-offset-1 col-xs-11'>
-            <h3>Holiday Application</h3>
+            <h3>Holidays</h3>
             <p class='lead'>
                 The access to this system is restricted.<br/>
                 If you believe you should have access, <br/>

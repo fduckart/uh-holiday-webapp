@@ -1,9 +1,9 @@
 package edu.hawaii.its.holiday.service;
 
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
@@ -23,7 +23,7 @@ import edu.hawaii.its.holiday.configuration.DatabaseConfig;
 import edu.hawaii.its.holiday.configuration.WebConfig;
 import edu.hawaii.its.holiday.type.Holiday;
 import edu.hawaii.its.holiday.type.HolidayType;
-import edu.hawaii.its.holiday.type.HolidayTypeMapping;
+import edu.hawaii.its.holiday.type.Type;
 import edu.hawaii.its.holiday.type.UserRole;
 import edu.hawaii.its.holiday.util.Strings;
 
@@ -40,10 +40,6 @@ public class HolidayServiceSystemTest {
     public void findHolidays() {
         List<Holiday> holidays = holidayService.findHolidays();
 
-        System.out.println(Strings.fill('v', 88));
-        holidays.forEach(h -> System.out.println("\t --> " + h));
-        System.out.println(Strings.fill('^', 88));
-
         Holiday h0 = holidays.get(0);
         assertNotNull(h0);
         Holiday h1 = holidayService.findHoliday(h0.getId());
@@ -52,37 +48,78 @@ public class HolidayServiceSystemTest {
     }
 
     @Test
-    public void findHolidayTypes() {
-        List<HolidayType> types = holidayService.findHolidayTypes();
+    public void findHolidaysByYear() {
+        List<Holiday> holidays = holidayService.findHolidays(2016);
+        assertThat(holidays.size(), equalTo(14));
 
-        HolidayType ht = types.get(0);
-        assertThat(ht.getId(), is(equalTo(1)));
-        assertThat(ht.getVersion(), is(equalTo(1)));
-        assertThat(ht.getDescription(), is(equalTo("Bank")));
+        holidays = holidayService.findHolidays(2014);
+        assertThat(holidays.size(), equalTo(15));
 
-        ht = types.get(1);
-        assertThat(ht.getId(), is(equalTo(2)));
-        assertThat(ht.getVersion(), is(equalTo(1)));
-        assertThat(ht.getDescription(), is(equalTo("Federal")));
+        holidays = holidayService.findHolidays(2011);
+        assertThat(holidays.size(), equalTo(14));
+        System.out.println(Strings.fill('v', 99));
+        System.out.println(">>> year: 2011 ...");
+        holidays.forEach(h -> System.out.println(h));
+        System.out.println(Strings.fill('^', 99));
 
-        ht = types.get(2);
-        assertThat(ht.getId(), is(equalTo(3)));
-        assertThat(ht.getVersion(), is(equalTo(1)));
-        assertThat(ht.getDescription(), is(equalTo("State")));
-
-        ht = types.get(3);
-        assertThat(ht.getId(), is(equalTo(4)));
-        assertThat(ht.getVersion(), is(equalTo(1)));
-        assertThat(ht.getDescription(), is(equalTo("UH")));
+        holidays = holidayService.findHolidays(2010);
+        assertThat(holidays.size(), equalTo(1));
+        System.out.println(Strings.fill('v', 99));
+        System.out.println(">>> year: 2010 ...");
+        holidays.forEach(h -> System.out.println(h));
+        System.out.println(Strings.fill('^', 99));
     }
 
     @Test
-    public void findHolidayTypeMappings() {
-        List<HolidayTypeMapping> mappings = holidayService.findHolidayTypeMappings();
-        assertTrue(mappings.size() > 10);
-        HolidayTypeMapping ht = mappings.get(0);
-        assertThat(ht.getTypeId(), is(equalTo(1)));
-        assertThat(ht.getHolidayId(), is(equalTo(15)));
+    public void findTypes() {
+        List<Type> types = holidayService.findTypes();
+
+        Type ht = types.get(0);
+        assertThat(ht.getId(), equalTo(1));
+        assertThat(ht.getVersion(), equalTo(1));
+        assertThat(ht.getDescription(), equalTo("Bank"));
+
+        ht = types.get(1);
+        assertThat(ht.getId(), equalTo(2));
+        assertThat(ht.getVersion(), equalTo(1));
+        assertThat(ht.getDescription(), equalTo("Federal"));
+
+        ht = types.get(2);
+        assertThat(ht.getId(), equalTo(3));
+        assertThat(ht.getVersion(), equalTo(1));
+        assertThat(ht.getDescription(), equalTo("State"));
+
+        ht = types.get(3);
+        assertThat(ht.getId(), equalTo(4));
+        assertThat(ht.getVersion(), equalTo(1));
+        assertThat(ht.getDescription(), equalTo("UH"));
+    }
+
+    @Test
+    public void findHolidayTypes() {
+        List<HolidayType> mappings = holidayService.findHolidayTypes();
+        assertTrue(mappings.size() > 50);
+        HolidayType ht = mappings.get(0);
+        assertThat(ht.getTypeId(), equalTo(1));
+        assertThat(ht.getHolidayId(), equalTo(1));
+
+        Holiday h = holidayService.findHoliday(ht.getHolidayId());
+        assertThat(h.getId(), equalTo(1));
+        assertThat(h.getVersion(), equalTo(0));
+        assertThat(h.getDescription(), equalTo("New Year's Day"));
+
+        Type t = holidayService.findType(ht.getTypeId());
+        assertThat(t.getId(), equalTo(1));
+        assertThat(t.getVersion(), equalTo(1));
+        assertThat(t.getDescription(), equalTo("Bank"));
+
+        // Make sure caching is working.
+        Integer id = ht.getId();
+        HolidayType ht0 = holidayService.findHolidayType(id);
+        HolidayType ht1 = holidayService.findHolidayType(id);
+        assertSame(ht0, ht1);
+        assertEquals(ht0, ht);
+        assertEquals(ht1, ht);
     }
 
     @Test

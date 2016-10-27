@@ -1,5 +1,6 @@
 package edu.hawaii.its.holiday.controller;
 
+import java.util.List;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -8,14 +9,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import edu.hawaii.its.holiday.access.User;
 import edu.hawaii.its.holiday.action.ActionRecorder;
 import edu.hawaii.its.holiday.security.UserContextService;
+import edu.hawaii.its.holiday.service.HolidayService;
 import edu.hawaii.its.holiday.service.MessageService;
+import edu.hawaii.its.holiday.type.Holiday;
 import edu.hawaii.its.holiday.type.Message;
+import edu.hawaii.its.holiday.type.YearHolidayHolder;
+import edu.hawaii.its.holiday.util.Dates;
 
 @Controller
 public class HomeController {
@@ -24,6 +31,8 @@ public class HomeController {
 
     @Autowired
     private ActionRecorder actionRecorder;
+    @Autowired
+    private HolidayService holidayService;
 
     @Autowired
     private UserContextService userContextService;
@@ -31,20 +40,40 @@ public class HomeController {
     @Autowired
     private MessageService messageService;
 
-    @RequestMapping(value = { "", "/", "/gate" }, method = { RequestMethod.GET })
-    public String gate(Locale locale, Model model) {
-        logger.debug("User at gate. The client locale is {}.", locale);
+    @RequestMapping(value = { "", "/", "/gate" }, method = { RequestMethod.GET, RequestMethod.POST })
+    public String gate(Locale locale,
+            Model model,
+            @ModelAttribute("holidayHolder") YearHolidayHolder holder,
+            BindingResult result) {
+
+        logger.info("User at gate. The client locale is {}.", locale);
 
         try {
             Message message = messageService.findMessage(Message.GATE_MESSAGE);
             if (message != null) {
                 model.addAttribute("systemMessage", message.getText());
             }
+            Integer year = yearValue(result);
+            holder = createYearHolidayHolder(year);
+            model.addAttribute("holidayHolder", holder);
         } catch (Exception e) {
             logger.error("Error", e);
         }
 
         return "gate";
+    }
+
+    protected Integer yearValue(BindingResult result) {
+        Integer year;
+        try {
+            String yearStr = (String) result.getFieldValue("year");
+            System.out.println("##### yearStr: " + yearStr);
+            year = Integer.valueOf(yearStr);
+        } catch (Exception ex) {
+            year = Integer.valueOf(Dates.currentYear());
+        }
+        System.out.println("######## year: " + year);
+        return year;
     }
 
     @PreAuthorize("hasRole('ROLE_UH')")
@@ -61,6 +90,23 @@ public class HomeController {
         logger.info("Leaving attributes.");
 
         return "attributes";
+    }
+
+    @ModelAttribute("holidayHolder")
+    public YearHolidayHolder createYearHolidayHolder(Integer year) {
+        List<Holiday> list = holidayService.findHolidays();
+
+        YearHolidayHolder holder = new YearHolidayHolder(list);
+        if (year != null) {
+            holder.setYear(year);
+        }
+
+        return holder;
+    }
+
+    @RequestMapping(value = "/ex", method = RequestMethod.GET)
+    public String experiment(Locale locale) {
+        return "experiment";
     }
 
     @RequestMapping(value = "/contact", method = RequestMethod.GET)

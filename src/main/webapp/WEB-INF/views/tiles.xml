@@ -15,6 +15,10 @@
     <definition name="attributes" extends="baseSimple">
         <put-attribute name="body" value="/WEB-INF/views/attributes/attributes.jsp" />        
     </definition>
+
+    <definition name="experiment" extends="baseSimple">
+        <put-attribute name="body" value="/WEB-INF/views/ex/ex.jsp" />
+    </definition>
     
     <definition name="faq" extends="baseSimple">
         <put-attribute name="body" value="/WEB-INF/views/about/faq.jsp" />

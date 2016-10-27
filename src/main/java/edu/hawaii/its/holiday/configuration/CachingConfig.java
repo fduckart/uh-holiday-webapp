@@ -18,6 +18,11 @@ public class CachingConfig {
         SimpleCacheManager cacheManager = new SimpleCacheManager();
         cacheManager.setCaches(Arrays.asList(
                 new ConcurrentMapCache("default"),
+                new ConcurrentMapCache("holidays"),
+                new ConcurrentMapCache("holidaysById"),
+                new ConcurrentMapCache("holidaysByYear"),
+                new ConcurrentMapCache("holidayTypes"),
+                new ConcurrentMapCache("holidayTypesById"),
                 new ConcurrentMapCache("messages")));
         return cacheManager;
     }

@@ -1,16 +1,11 @@
 package edu.hawaii.its.holiday.controller;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
-
-import java.util.Locale;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,15 +17,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.ui.ExtendedModelMap;
-import org.springframework.ui.Model;
 import org.springframework.web.context.WebApplicationContext;
 
 import edu.hawaii.its.holiday.configuration.CachingConfig;
 import edu.hawaii.its.holiday.configuration.DatabaseConfig;
 import edu.hawaii.its.holiday.configuration.SecurityConfig;
 import edu.hawaii.its.holiday.configuration.WebConfig;
-import edu.hawaii.its.holiday.controller.HomeController;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -64,15 +56,15 @@ public class HomeControllerSystemTest {
         assertNotNull(homeController);
     }
 
-    @Test
-    public void testController() {
-        Model model = new ExtendedModelMap();
-
-        assertEquals("gate", homeController.gate(Locale.US, model));
-
-        assertFalse(model.asMap().entrySet().isEmpty());
-        assertTrue(model.asMap().keySet().contains("systemMessage"));
-    }
+    //    @Test
+    //    public void testController() {
+    //        Model model = new ExtendedModelMap();
+    //
+    //        assertEquals("gate", homeController.gate(Locale.US, model));
+    //
+    //        assertFalse(model.asMap().entrySet().isEmpty());
+    //        assertTrue(model.asMap().keySet().contains("systemMessage"));
+    //    }
 
     @Test
     public void requestUrlDenied() throws Exception {

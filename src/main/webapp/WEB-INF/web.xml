@@ -6,7 +6,7 @@
   version="3.1"
   metadata-complete="true">
 
-    <display-name>Holiday Application</display-name>
+    <display-name>Holidays</display-name>
     
     <context-param>
         <param-name>log4jConfigLocation</param-name>

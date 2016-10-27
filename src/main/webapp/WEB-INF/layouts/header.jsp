@@ -15,7 +15,7 @@
                 <img src="<c:url value="/resources/images/seal.jpg" />" alt="">                
             </a>
             <a class="navbar-brand uh-nav-app-name" href="<c:url value="/" />">
-                Holiday Application
+                Holidays
             </a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->

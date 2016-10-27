@@ -84,5 +84,7 @@
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-test/4.3.2.RELEASE/spring-test-4.3.2.RELEASE.jar" sourcepath="M2_REPO/org/springframework/spring-test/4.3.2.RELEASE/spring-test-4.3.2.RELEASE-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/apache/ws/xmlschema/xmlschema-core/2.0.3/xmlschema-core-2.0.3.jar" sourcepath="M2_REPO/org/apache/ws/xmlschema/xmlschema-core/2.0.3/xmlschema-core-2.0.3-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/security/spring-security-test/4.1.2.RELEASE/spring-security-test-4.1.2.RELEASE.jar"/>
+	<classpathentry kind="var" path="M2_REPO/com/fasterxml/jackson/core/jackson-core/2.8.4/jackson-core-2.8.4.jar"/>
+	<classpathentry kind="var" path="M2_REPO/com/fasterxml/jackson/core/jackson-annotations/2.8.4/jackson-annotations-2.8.4.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

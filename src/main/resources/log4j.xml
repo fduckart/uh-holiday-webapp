@@ -29,52 +29,6 @@
         <level value="info" />
     </logger>
 
-    <logger name="org.springframework.security">
-        <level value="debug" />
-    </logger>    
-    <logger name="org.springframework.security.access">
-        <level value="debug" />
-    </logger>
-    <logger name="org.springframework.security.cas.authentication.CasAuthenticationProvider">
-        <level value="debug" />
-    </logger>                
-    <logger name="org.springframework.security.web.FilterChainProxy">
-        <level value="debug" />
-    </logger>                   
-    <logger name="org.springframework.security.web.util">
-        <level value="debug" />
-    </logger>
-    <logger name="org.springframework.security.web.access">
-        <level value="debug" />
-    </logger>
-    <logger name="org.springframework.security.web.access.ExceptionTranslationFilter">
-        <level value="debug" />
-    </logger>    
-    <logger name="org.springframework.security.web.authentication.AnonymousAuthenticationFilter">
-        <level value="debug" />
-    </logger>        
-    <logger name="org.springframework.security.web.context.SecurityContextPersistenceFilter">
-        <level value="debug" />
-    </logger>
-    <logger name="org.springframework.security.web.context.HttpSessionSecurityContextRepository">
-        <level value="debug" />
-    </logger>        
-    <logger name="org.springframework.security.web.savedrequest">
-        <level value="debug" />
-    </logger>             
-    <logger name="org.springframework.security.web.session">
-        <level value="debug" />
-    </logger>
-    
-    <logger name="org.jasig.cas.client.validation">
-        <level value="debug" />
-    </logger>
-    <logger name="org.jasig.cas.client.validation.Saml11TicketValidator">
-        <level value="debug" />
-    </logger>                                                
-    <logger name="org.jasig.cas.client.session">
-        <level value="debug" />
-    </logger>
     <logger name="org.jasig.cas.client.util.CommonUtils">
         <level value="error" />
     </logger>
