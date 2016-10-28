@@ -1,11 +1,11 @@
 @font-face {
     font-family: cinzel-regular;
-    src: url(/holidays/resources/fonts/Cinzel-Regular.ttf);
+    src: url(../../resources/fonts/Cinzel-Regular.ttf);
 }
 
 @font-face {
     font-family: cormorant-upright-regular;
-    src: url(/holidays/resources/fonts/CormorantUpright-Regular.ttf);
+    src: url(../../resources/fonts/CormorantUpright-Regular.ttf);
 }
 
 html {
