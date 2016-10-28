@@ -25,7 +25,6 @@ import edu.hawaii.its.holiday.type.Holiday;
 import edu.hawaii.its.holiday.type.HolidayType;
 import edu.hawaii.its.holiday.type.Type;
 import edu.hawaii.its.holiday.type.UserRole;
-import edu.hawaii.its.holiday.util.Strings;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -45,6 +44,12 @@ public class HolidayServiceSystemTest {
         Holiday h1 = holidayService.findHoliday(h0.getId());
         assertEquals(h0.getId(), h1.getId());
         assertEquals(h0, h1);
+
+        // Check that the caching is working.
+        Holiday h2 = holidayService.findHolidays().get(0);
+        Holiday h3 = holidayService.findHolidays().get(0);
+        assertEquals(h2, h3);
+        assertSame(h2, h3);
     }
 
     @Test
@@ -57,17 +62,15 @@ public class HolidayServiceSystemTest {
 
         holidays = holidayService.findHolidays(2011);
         assertThat(holidays.size(), equalTo(14));
-        System.out.println(Strings.fill('v', 99));
-        System.out.println(">>> year: 2011 ...");
-        holidays.forEach(h -> System.out.println(h));
-        System.out.println(Strings.fill('^', 99));
 
         holidays = holidayService.findHolidays(2010);
         assertThat(holidays.size(), equalTo(1));
-        System.out.println(Strings.fill('v', 99));
-        System.out.println(">>> year: 2010 ...");
-        holidays.forEach(h -> System.out.println(h));
-        System.out.println(Strings.fill('^', 99));
+
+        // Check that the caching is working.
+        Holiday h0 = holidayService.findHolidays(2010).get(0);
+        Holiday h1 = holidayService.findHolidays(2010).get(0);
+        assertEquals(h0, h1);
+        assertSame(h0, h1);
     }
 
     @Test

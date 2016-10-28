@@ -1,6 +1,5 @@
 package edu.hawaii.its.holiday.service;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -8,7 +7,6 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.hawaii.its.holiday.type.Holiday;
@@ -17,8 +15,7 @@ import edu.hawaii.its.holiday.type.Type;
 import edu.hawaii.its.holiday.type.UserRole;
 import edu.hawaii.its.holiday.util.Dates;
 
-@Service("holidayService")
-@Repository
+@Repository("holidayService")
 public class HolidayService {
 
     private EntityManager em;
@@ -67,8 +64,6 @@ public class HolidayService {
         if (year == null) {
             year = Dates.currentYear();
         }
-        Date start = Dates.firstDateOfYear(year);
-        Date end = Dates.lastDateOfYear(year);
 
         String qlString = "select a from Holiday a "
                 + "where (a.observedDate between :start and :end) "
@@ -76,8 +71,8 @@ public class HolidayService {
                 + "order by a.observedDate desc";
 
         return em.createQuery(qlString, Holiday.class)
-                .setParameter("start", start)
-                .setParameter("end", end)
+                .setParameter("start", Dates.firstDateOfYear(year))
+                .setParameter("end", Dates.lastDateOfYear(year))
                 .getResultList();
     }
 

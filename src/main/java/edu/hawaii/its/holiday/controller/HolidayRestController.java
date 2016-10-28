@@ -5,6 +5,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,25 +24,35 @@ public class HolidayRestController {
     @Autowired
     private HolidayService holidayService;
 
-    @RequestMapping(value = "/api/holidays", method = RequestMethod.GET)
-    public List<Holiday> holidays() {
+    @RequestMapping(value = "/api/holidays",
+                    method = RequestMethod.GET,
+                    produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Holiday>> holidays() {
         logger.info("Entered REST holidays...");
-        List<Holiday> holidays = holidayService.findHolidays();
-        logger.info("Leaving REST holidays.");
-
-        return holidays;
+        return ResponseEntity
+                .ok()
+                .body(holidayService.findHolidays());
     }
 
-    @RequestMapping(value = "/api/holidays/{id}", method = RequestMethod.GET)
-    public Holiday holiday(@PathVariable Integer id) {
-        return holidayService.findHoliday(id);
+    @RequestMapping(value = "/api/holidays/{id}",
+                    method = RequestMethod.GET,
+                    produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Holiday> holiday(@PathVariable Integer id) {
+        logger.info("Entered REST holiday(" + id + ") ...");
+        return ResponseEntity
+                .ok()
+                .body(holidayService.findHoliday(id));
     }
 
-    @RequestMapping(value = "/api/types", method = RequestMethod.GET)
-    public List<HolidayType> holidayTypes() {
-        return holidayService.findHolidayTypes();
+    @RequestMapping(value = "/api/types",
+                    method = RequestMethod.GET,
+                    produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<HolidayType>> holidayTypes() {
+        logger.info("Entered REST holidayTypes...");
+        List<HolidayType> types = holidayService.findHolidayTypes();
+        return ResponseEntity
+                .ok()
+                .body(types);
     }
-
-    //@RequestMapping(value = "/api/holidays/{id}", method = RequestMethod.GET)
 
 }

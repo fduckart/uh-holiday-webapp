@@ -39,14 +39,14 @@
                         <td align="left" valign="top">Q: What did you use to create the site?</td>
                         <td align="left" valign="top">
                         <ul  class="list-unstyled">
-                            <li>Apache Maven 3.2.1</li>
-                            <li>Apache Tomcat 8.0.32</li>
-                            <li>Java 1.8</li>
-                            <li>Spring Framework 4.3.2</li>
-                            <li>Spring Security 4.1.2</li>
-                            <li>Apache Tiles 3.0.5</li>
-                            <li>Bootstrap 3.3.7</li>
-                            <li>JQuery 2.1.1</li>
+                            <li>Apache Maven</li>
+                            <li>Apache Tomcat</li>
+                            <li>Java</li>
+                            <li>Spring Framework</li>
+                            <li>Spring Security</li>
+                            <li>Apache Tiles</li>
+                            <li>Bootstrap</li>
+                            <li>JQuery</li>
                         </ul>
                         </td>
                     </tr>
