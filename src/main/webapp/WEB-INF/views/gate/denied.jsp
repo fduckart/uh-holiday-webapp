@@ -6,7 +6,7 @@
                 The access to this system is restricted.<br/>
                 If you believe you should have access, <br/>
                 please send an email to
-                <a href="mailto:duckart@hawaii.edu">duckart@hawaii.edu</a>.
+                <a href="mailto:mis-web-developers-l@lists.hawaii.edu">mis-web-developers-l@lists.hawaii.edu</a>.
             </p>
         </div>
     </div>

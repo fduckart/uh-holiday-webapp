@@ -6,11 +6,11 @@
                 <tbody>
                     <tr>
                         <td align="left" valign="top">For General Help/How-To Questions</td>
-                        <td align="left" valign="top">Send email: <a href="mailto:duckart@hawaii.edu">duckart@hawaii.edu</a></td>
+                        <td align="left" valign="top">Send email: <a href="mailto:mis-web-developers-l@lists.hawaii.edu">mis-web-developers-l@lists.hawaii.edu</a></td>
                     </tr>
                     <tr>
                         <td align="left" valign="top">Reporting Technical Issues/Problems</td>
-                        <td align="left" valign="top">Send email: <a href="mailto:duckart@hawaii.edu">duckart@hawaii.edu</a></td>
+                        <td align="left" valign="top">Send email: <a href="mailto:mis-web-developers-l@lists.hawaii.edu">mis-web-developers-l@lists.hawaii.edu</a></td>
                     </tr>
                     <tr>
                         <td align="left" valign="top">Information Technology Services</td>

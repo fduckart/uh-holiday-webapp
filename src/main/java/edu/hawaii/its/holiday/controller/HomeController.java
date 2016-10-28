@@ -46,7 +46,7 @@ public class HomeController {
             @ModelAttribute("holidayHolder") YearHolidayHolder holder,
             BindingResult result) {
 
-        logger.info("User at gate. The client locale is {}.", locale);
+        logger.debug("User at gate. The client locale is {}.", locale);
 
         try {
             Message message = messageService.findMessage(Message.GATE_MESSAGE);

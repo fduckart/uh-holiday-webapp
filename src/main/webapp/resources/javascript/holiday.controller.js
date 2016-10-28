@@ -1,7 +1,7 @@
 (function() {
 
     function HolidayJsController($scope, dataProvider) {
-        var url = '/holidays/api/holidays';
+        var url = 'api/holidays';
         $scope.init = function() {
             dataProvider.loadData(function(data) {
                 $scope.holidays = data;
