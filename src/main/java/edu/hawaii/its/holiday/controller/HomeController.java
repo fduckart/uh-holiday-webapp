@@ -67,12 +67,10 @@ public class HomeController {
         Integer year;
         try {
             String yearStr = (String) result.getFieldValue("year");
-            System.out.println("##### yearStr: " + yearStr);
             year = Integer.valueOf(yearStr);
         } catch (Exception ex) {
             year = Integer.valueOf(Dates.currentYear());
         }
-        System.out.println("######## year: " + year);
         return year;
     }
 
