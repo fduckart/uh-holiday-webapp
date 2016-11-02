@@ -2,12 +2,16 @@ package edu.hawaii.its.holiday.util;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -21,18 +25,35 @@ public class DatesTest {
     protected GregorianCalendar newYearsDay2000;
     protected GregorianCalendar dayMusicDied;
 
+    protected LocalDate christmasLocalDate;
+    protected LocalDate newYearsDay2000LocalDate;
+    protected LocalDate dayMusicDiedLocalDate;
+
     @Before
     public void setUp() {
         christmas = new GregorianCalendar(1962, Calendar.DECEMBER, 25, 0, 0, 0);
         newYearsDay2000 = new GregorianCalendar(2000, Calendar.JANUARY, 1, 0, 0, 0);
         dayMusicDied = new GregorianCalendar(1959, Calendar.FEBRUARY, 3);
+
+        christmasLocalDate = LocalDate.of(1962, Month.DECEMBER, 25);
+        newYearsDay2000LocalDate = LocalDate.of(2000, Month.JANUARY, 1);
+        dayMusicDiedLocalDate = LocalDate.of(1959, Month.FEBRUARY, 3);
+
+    }
+
+    private Calendar makeCalendar() {
+        return Calendar.getInstance();
+    }
+
+    private Calendar makeCalendar(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+
+        return cal;
     }
 
     @Test
     public void testNewDate() {
-        Date date0 = Dates.newDate();
-        assertNotNull(date0);
-
         Date date1 = Dates.newDate(Month.DECEMBER, 25, 1962);
         assertEquals(christmas.getTime(), date1);
 
@@ -49,6 +70,11 @@ public class DatesTest {
         cal.set(Calendar.MILLISECOND, 0);
 
         assertEquals(cal.getTime().getTime(), date2.getTime());
+
+        assertEquals(1962, christmasLocalDate.getYear());
+        assertEquals(Month.DECEMBER, christmasLocalDate.getMonth());
+        assertEquals(25, christmasLocalDate.getDayOfMonth());
+
     }
 
     @Test
@@ -112,18 +138,9 @@ public class DatesTest {
     }
 
     @Test
-    public void testDaysToSeconds() {
-        final int DAYS_130_IN_SECONDS = 130 * 24 * 60;
-        final int DAYS_240_IN_SECONDS = 240 * 24 * 60;
-        assertEquals(DAYS_130_IN_SECONDS, Dates.daysToSeconds(130));
-        assertEquals(DAYS_240_IN_SECONDS, Dates.daysToSeconds(240));
-
-        assertEquals(0, Dates.daysToSeconds(0));
-        assertEquals(24 * 60, Dates.daysToSeconds(1));
-    }
-
-    @Test
     public void testFirstOfYear() {
+        assertEquals(Dates.newLocalDate(Month.FEBRUARY, 3, 1959), dayMusicDiedLocalDate);
+
         Date date0 = Dates.firstOfYear(dayMusicDied.getTime());
         assertEquals(Dates.newDate(Month.JANUARY, 1, 1959), date0);
 
@@ -228,7 +245,7 @@ public class DatesTest {
             cal.clear();
             cal.set(Calendar.YEAR, year);
             for (Month month : Month.values()) {
-                cal.set(Calendar.MONTH, month.getValue());
+                cal.set(Calendar.MONTH, month.getValue() - 1);
                 int lastDayOfMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
                 assertEquals(lastDayOfMonth, Dates.lastDayOfMonth(month, year));
             }
@@ -243,7 +260,7 @@ public class DatesTest {
 
         assertEquals(date1, date2);
 
-        Calendar cal = Dates.makeCalendar(date1);
+        Calendar cal = makeCalendar(date1);
         assertEquals(1, cal.get(Calendar.DAY_OF_MONTH));
         assertEquals(1962, cal.get(Calendar.YEAR));
         assertEquals(Calendar.DECEMBER, cal.get(Calendar.MONTH));
@@ -287,9 +304,9 @@ public class DatesTest {
     @Test
     public void testMonthValues() {
         // The use of these methods is not recommended.
-        assertEquals(Month.JANUARY, Month.valueOf(0));
+        assertEquals(Month.JANUARY, Month.of(1));
         assertEquals(Month.JANUARY, Month.valueOf("JANUARY"));
-        assertEquals(Month.DECEMBER, Month.valueOf(11));
+        assertEquals(Month.DECEMBER, Month.of(12));
         assertEquals(Month.DECEMBER, Month.valueOf("DECEMBER"));
 
         int month = 5;
@@ -305,8 +322,8 @@ public class DatesTest {
         cal.set(Calendar.DAY_OF_MONTH, day);
         final Date from = cal.getTime();
 
-        assertEquals(from, Dates.newDate(Month.valueOf(month), day, year));
-        assertEquals(from, Dates.firstOfMonth(Month.valueOf(month), year));
+        assertEquals(from, Dates.newDate(Month.of(month + 1), day, year));
+        assertEquals(from, Dates.firstOfMonth(Month.of(month + 1), year));
 
         cal = Calendar.getInstance();
         cal.setTime(from);
@@ -318,7 +335,7 @@ public class DatesTest {
         assertEquals(0, cal.get(Calendar.MINUTE));
         assertEquals(0, cal.get(Calendar.MILLISECOND));
 
-        Date first = Dates.firstOfMonth(Month.valueOf(month), year);
+        Date first = Dates.firstOfMonth(Month.of(month + 1), year);
         cal = Calendar.getInstance();
         cal.setTime(first);
         assertEquals(1999, cal.get(Calendar.YEAR));
@@ -337,7 +354,7 @@ public class DatesTest {
         Calendar cal0 = Calendar.getInstance();
         cal0.setTime(dateStart);
 
-        Calendar cal1 = Dates.makeCalendar(dateStart);
+        Calendar cal1 = makeCalendar(dateStart);
         assertEquals(cal0, cal1);
 
         assertEquals(1, cal1.get(Calendar.DAY_OF_MONTH));
@@ -349,7 +366,7 @@ public class DatesTest {
         assertEquals(0, cal1.get(Calendar.MILLISECOND));
 
         Date date = Dates.fromOffset(dateStart, 1);
-        cal1 = Dates.makeCalendar(date);
+        cal1 = makeCalendar(date);
         assertEquals(2, cal1.get(Calendar.DAY_OF_MONTH));
         assertEquals(Calendar.JANUARY, cal1.get(Calendar.MONTH));
         assertEquals(2011, cal1.get(Calendar.YEAR));
@@ -359,7 +376,7 @@ public class DatesTest {
         assertEquals(0, cal1.get(Calendar.MILLISECOND));
 
         date = Dates.fromOffset(date, 1);
-        cal1 = Dates.makeCalendar(date);
+        cal1 = makeCalendar(date);
         assertEquals(3, cal1.get(Calendar.DAY_OF_MONTH));
         assertEquals(Calendar.JANUARY, cal1.get(Calendar.MONTH));
         assertEquals(2011, cal1.get(Calendar.YEAR));
@@ -369,7 +386,7 @@ public class DatesTest {
         assertEquals(0, cal1.get(Calendar.MILLISECOND));
 
         date = Dates.fromOffset(date, -2);
-        cal1 = Dates.makeCalendar(date);
+        cal1 = makeCalendar(date);
         assertEquals(1, cal1.get(Calendar.DAY_OF_MONTH));
         assertEquals(Calendar.JANUARY, cal1.get(Calendar.MONTH));
         assertEquals(2011, cal1.get(Calendar.YEAR));
@@ -379,7 +396,7 @@ public class DatesTest {
         assertEquals(0, cal1.get(Calendar.MILLISECOND));
 
         date = Dates.fromOffset(date, -1);
-        cal1 = Dates.makeCalendar(date);
+        cal1 = makeCalendar(date);
         assertEquals(31, cal1.get(Calendar.DAY_OF_MONTH));
         assertEquals(Calendar.DECEMBER, cal1.get(Calendar.MONTH));
         assertEquals(2010, cal1.get(Calendar.YEAR));
@@ -389,7 +406,7 @@ public class DatesTest {
         assertEquals(0, cal1.get(Calendar.MILLISECOND));
 
         date = Dates.fromOffset(date, 32);
-        cal1 = Dates.makeCalendar(date);
+        cal1 = makeCalendar(date);
         assertEquals(1, cal1.get(Calendar.DAY_OF_MONTH));
         assertEquals(Calendar.FEBRUARY, cal1.get(Calendar.MONTH));
         assertEquals(2011, cal1.get(Calendar.YEAR));
@@ -399,7 +416,7 @@ public class DatesTest {
         assertEquals(0, cal1.get(Calendar.MILLISECOND));
 
         date = Dates.fromOffset(date, -1);
-        cal1 = Dates.makeCalendar(date);
+        cal1 = makeCalendar(date);
         assertEquals(31, cal1.get(Calendar.DAY_OF_MONTH));
         assertEquals(Calendar.JANUARY, cal1.get(Calendar.MONTH));
         assertEquals(2011, cal1.get(Calendar.YEAR));
@@ -473,7 +490,7 @@ public class DatesTest {
 
     @Test
     public void toSqlDate() {
-        Calendar cal1 = Dates.makeCalendar();
+        Calendar cal1 = makeCalendar();
         cal1.clear();
         cal1.set(Calendar.MONTH, Calendar.MARCH);
         cal1.set(Calendar.DAY_OF_MONTH, 15);
@@ -488,7 +505,7 @@ public class DatesTest {
         cal1 = null;
         assertTrue("2000-03-15".equals(date2.toString()));
 
-        Calendar cal2 = Dates.makeCalendar();
+        Calendar cal2 = makeCalendar();
         cal2.clear();
         cal2.setTime(date2);
 
@@ -501,7 +518,7 @@ public class DatesTest {
         cal2 = null;
 
         Date date3 = Dates.newDate(date2);
-        Calendar cal3 = Dates.makeCalendar();
+        Calendar cal3 = makeCalendar();
         cal3.clear();
         cal3.setTime(date3);
         assertEquals(2000, cal3.get(Calendar.YEAR));
@@ -550,7 +567,7 @@ public class DatesTest {
 
             assertTrue("1. endOfYear: " + endOfYear, endOfYear.equals(cal.getTime()));
 
-            cal = Dates.makeCalendar(Dates.lastDateOfYear(year));
+            cal = makeCalendar(Dates.lastDateOfYear(year));
             assertTrue("2. endOfYear: " + endOfYear, endOfYear.equals(cal.getTime()));
 
             cal.add(Calendar.DAY_OF_MONTH, 1);
@@ -573,12 +590,13 @@ public class DatesTest {
             assertEquals(month.getValue(), Dates.month(lastOfMonth));
             Date firstOfMonth = Dates.firstDateOfMonth(month, year);
             assertEquals(month.getValue(), Dates.month(firstOfMonth));
+            assertEquals(1, firstOfMonth.getDate());
         }
     }
 
     @Test
     public void currentYear() {
-        Calendar cal = Dates.makeCalendar();
+        Calendar cal = makeCalendar();
         int year = cal.get(Calendar.YEAR);
         assertEquals(year, Dates.currentYear());
     }
@@ -594,23 +612,23 @@ public class DatesTest {
 
     @Test
     public void dayOfWeek() {
-        Calendar cal = Dates.makeCalendar(Dates.firstDateOfYear(2012));
+        LocalDate cal = Dates.toLocalDate(Dates.firstDateOfYear(2012));
         for (int i = 0; i < 366; i++) {
-            int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
-            assertEquals(dayOfWeek, Dates.dayOfWeek(cal.getTime()));
-            cal.add(Calendar.DATE, 1);
+            int dayOfWeek = cal.getDayOfWeek().getValue();
+            assertEquals(dayOfWeek, Dates.dayOfWeek(Dates.toDate(cal)));
+            cal = cal.plusDays(1);
         }
-        assertEquals(Dates.newDate(Month.JANUARY, 1, 2013), Dates.newDate(cal.getTime()));
+        assertEquals(Dates.newDate(Month.JANUARY, 1, 2013), Dates.newDate(Dates.toDate(cal)));
 
-        // Just a random one.
+        // Just a random one, a Friday.
         Date date = Dates.newDate(Month.DECEMBER, 7, 2012);
-        assertEquals(Calendar.FRIDAY, Dates.dayOfWeek(date));
+        assertEquals(DayOfWeek.FRIDAY.getValue(), Dates.dayOfWeek(date));
     }
 
     @Test
     public void dayOfMonth() {
         int checks = 0;
-        Calendar cal = Dates.makeCalendar(Dates.firstDateOfYear(2013));
+        Calendar cal = makeCalendar(Dates.firstDateOfYear(2013));
         for (int m = 0; m < 12; m++) {
             cal.set(Calendar.MONTH, m);
             int maxDays = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
@@ -682,5 +700,41 @@ public class DatesTest {
         date = Dates.newDate(Month.DECEMBER, 30, 2013);
         String dateStr7 = Dates.formatDate(date);
         assertEquals("12/30/2013", dateStr7);
+    }
+
+    @Test
+    public void testing() {
+        LocalDate today = LocalDate.now();
+        System.out.println("Today's Local date : " + today);
+        System.out.println("Today's Local year : " + today.getYear());
+
+        Date date = new Date();
+        LocalDate ld = new java.sql.Date(date.getTime()).toLocalDate();
+        System.out.println("ld................ : " + ld);
+
+        ZoneId defaultZoneId = ZoneId.systemDefault();
+        Instant instant = date.toInstant();
+        LocalDate localDate = instant.atZone(defaultZoneId).toLocalDate();
+        System.out.println("localDate......... : " + localDate);
+
+        System.out.println("my  Month.OCTOBER: " + Month.OCTOBER.getValue());
+        System.out.println("jdk Month.OCTOBER: " + java.time.Month.OCTOBER.getValue());
+
+        System.out.println("ZoneId.systemDefault   : " + ZoneId.systemDefault());
+        System.out.println("ZoneId.of              : " + ZoneId.of("Pacific/Honolulu"));
+        //System.out.println("ZoneId.systemDefault.id: " + ZoneId.getAvailableZoneIds());
+        System.out.println("ZoneId.SHORT_IDS       : " + ZoneId.SHORT_IDS.keySet());
+        System.out.println("ZoneId.SHORT_IDS.hst   : " + ZoneId.SHORT_IDS.get("HST"));
+
+        System.out.println(Strings.fill('v', 99));
+    }
+
+    @Test
+    public void dateToLocalDate() {
+        Date d = Dates.newDate(Month.OCTOBER, 31, 2016);
+        LocalDate ld = Dates.toLocalDate(d);
+        assertEquals(31, ld.getDayOfMonth());
+        assertEquals(2016, ld.getYear());
+        assertEquals(java.time.Month.OCTOBER, ld.getMonth());
     }
 }

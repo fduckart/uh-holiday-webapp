@@ -9,8 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import edu.hawaii.its.holiday.util.Dates;
 
 @Entity
 @Table(name = "holiday")
@@ -75,6 +78,14 @@ public class Holiday implements Serializable {
 
     public void setOfficialDate(Date officialDate) {
         this.officialDate = officialDate;
+    }
+
+    @Transient
+    public Integer getYear() {
+        if (observedDate != null) {
+            return Dates.yearOfDate(observedDate);
+        }
+        return null;
     }
 
     @Override

@@ -18,9 +18,7 @@ import edu.hawaii.its.holiday.access.User;
 import edu.hawaii.its.holiday.action.ActionRecorder;
 import edu.hawaii.its.holiday.security.UserContextService;
 import edu.hawaii.its.holiday.service.HolidayService;
-import edu.hawaii.its.holiday.service.MessageService;
 import edu.hawaii.its.holiday.type.Holiday;
-import edu.hawaii.its.holiday.type.Message;
 import edu.hawaii.its.holiday.type.YearHolidayHolder;
 import edu.hawaii.its.holiday.util.Dates;
 
@@ -31,28 +29,22 @@ public class HomeController {
 
     @Autowired
     private ActionRecorder actionRecorder;
+
     @Autowired
     private HolidayService holidayService;
 
     @Autowired
     private UserContextService userContextService;
 
-    @Autowired
-    private MessageService messageService;
-
-    @RequestMapping(value = { "", "/", "/gate" }, method = { RequestMethod.GET, RequestMethod.POST })
+    @RequestMapping(value = { "", "/" }, method = { RequestMethod.GET, RequestMethod.POST })
     public String gate(Locale locale,
             Model model,
             @ModelAttribute("holidayHolder") YearHolidayHolder holder,
             BindingResult result) {
 
-        logger.debug("User at gate. The client locale is {}.", locale);
+        logger.info("User at gate. The client locale is {}.", locale);
 
         try {
-            Message message = messageService.findMessage(Message.GATE_MESSAGE);
-            if (message != null) {
-                model.addAttribute("systemMessage", message.getText());
-            }
             Integer year = yearValue(result);
             holder = createYearHolidayHolder(year);
             model.addAttribute("holidayHolder", holder);

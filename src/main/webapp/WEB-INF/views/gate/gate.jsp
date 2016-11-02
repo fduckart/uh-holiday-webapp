@@ -12,11 +12,12 @@
                         <form:form id="form" method="POST" action="${formAction}" modelAttribute="holidayHolder">
                             Year:&nbsp;
                             <form:select items="${holidayHolder.years}" path="year" />
+                            <form:hidden path="year"/>
                         </form:form>
                     </div>
                     <table class="table table-bordered table-hover table-condensed">
                         <tbody>
-                            <tr>
+                            <tr>                                
                                 <th>Holiday</th>
                                 <th>Observed</th>
                                 <th>Official</th>

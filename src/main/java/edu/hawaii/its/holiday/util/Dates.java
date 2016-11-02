@@ -2,54 +2,37 @@ package edu.hawaii.its.holiday.util;
 
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.time.DayOfWeek;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
 
 public final class Dates {
-
-    public static final long SECONDS_PER_DAY = 86400;
-    public static final long MILLISECONDS_PER_SECOND = 1000;
-    public static final long MILLISECONDS_PER_DAY = MILLISECONDS_PER_SECOND * SECONDS_PER_DAY;
-    public static final int MINUTES_PER_HOUR = 60;
 
     // Private constructor; prevent instantiation.
     private Dates() {
         // Emtpy.
     }
 
+    public static LocalDate newLocalDate(Month month, int day, int year) {
+        return LocalDate.of(year, month, day);
+    }
+
     public static Date newDate(Month month, int day, int year) {
-        Calendar cal = Calendar.getInstance();
-        cal.clear();
-        cal.set(Calendar.DAY_OF_MONTH, day);
-        cal.set(Calendar.MONTH, month.getValue());
-        cal.set(Calendar.YEAR, year);
-        return cal.getTime();
+        LocalDate localDate = LocalDate.of(year, month, day);
+        return toDate(localDate);
+    }
+
+    private static ZoneId zoneId() {
+        return ZoneId.systemDefault();
     }
 
     public static Date newDate(Date date) {
         return dateWithoutTime(date);
-    }
-
-    public static Date newDate() {
-        Calendar calSwap = Calendar.getInstance();
-        Calendar calNew = Calendar.getInstance();
-        calNew.clear();
-        calNew.set(Calendar.YEAR, calSwap.get(Calendar.YEAR));
-        calNew.set(Calendar.MONTH, calSwap.get(Calendar.MONTH));
-        calNew.set(Calendar.DAY_OF_MONTH, calSwap.get(Calendar.DAY_OF_MONTH));
-
-        return calNew.getTime();
-    }
-
-    public static Date newDateWithoutTime() {
-        Calendar calSwap = Calendar.getInstance();
-        Calendar calNew = Calendar.getInstance();
-        calNew.clear();
-        calNew.set(Calendar.YEAR, calSwap.get(Calendar.YEAR));
-        calNew.set(Calendar.MONTH, calSwap.get(Calendar.MONTH));
-        calNew.set(Calendar.DAY_OF_MONTH, calSwap.get(Calendar.DAY_OF_MONTH));
-
-        return calNew.getTime();
     }
 
     private static Date dateWithoutTime(Date date) {
@@ -57,64 +40,34 @@ public final class Dates {
             return null;
         }
 
-        Calendar calSwap = Calendar.getInstance();
-        calSwap.setTime(date);
+        if (date instanceof java.sql.Date) {
+            date = new Date(date.getTime());
+        }
 
-        Calendar calNew = Calendar.getInstance();
-        calNew.clear();
-        calNew.set(Calendar.YEAR, calSwap.get(Calendar.YEAR));
-        calNew.set(Calendar.MONTH, calSwap.get(Calendar.MONTH));
-        calNew.set(Calendar.DAY_OF_MONTH, calSwap.get(Calendar.DAY_OF_MONTH));
+        LocalDate localDate = toLocalDate(date);
 
-        return calNew.getTime();
-    }
-
-    public static int daysToSeconds(int days) {
-        return days * 24 * 60;
+        return toDate(localDate);
     }
 
     public static int month(Date date) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        return cal.get(Calendar.MONTH);
+        return toLocalDate(date).getMonthValue();
     }
 
     public static Date firstOfYear(Date date) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        int year = cal.get(Calendar.YEAR);
-
+        int year = Dates.yearOfDate(date);
         return newDate(Month.JANUARY, 1, year);
     }
 
     public static Date firstOfNextYear(Date date) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        int year = cal.get(Calendar.YEAR) + 1;
-
+        int year = Dates.yearOfDate(date) + 1;
         return newDate(Month.JANUARY, 1, year);
     }
 
     public static Date firstOfPreviousYear(Date date) {
-        Calendar calSwap = Calendar.getInstance();
-        calSwap.setTime(date);
-        int year = calSwap.get(Calendar.YEAR) - 1;
+        LocalDate ld = toLocalDate(date);
+        int year = ld.getYear() - 1;
 
         return newDate(Month.JANUARY, 1, year);
-    }
-
-    public static Date firstOfMonth(Date date) {
-        Calendar calSwap = Calendar.getInstance();
-        calSwap.setTime(date);
-
-        Calendar calNew = Calendar.getInstance();
-        calNew.clear();
-        calNew.set(Calendar.DAY_OF_MONTH, 1);
-        calNew.set(Calendar.MONTH, calSwap.get(Calendar.MONTH));
-        calNew.set(Calendar.YEAR, calSwap.get(Calendar.YEAR));
-
-        return calNew.getTime();
-
     }
 
     public static Date firstOfMonth(Month month, int year) {
@@ -122,79 +75,42 @@ public final class Dates {
     }
 
     public static Date firstDateOfMonth(Month month, int year) {
-        Calendar cal = Calendar.getInstance();
-        cal.clear();
-        cal.set(Calendar.DAY_OF_MONTH, 1);
-        cal.set(Calendar.MONTH, month.getValue());
-        cal.set(Calendar.YEAR, year);
-
-        return cal.getTime();
+        return newDate(month, 1, year);
     }
 
     public static Date firstOfNextMonth(Date date) {
-        Calendar calSwap = Calendar.getInstance();
-        calSwap.setTime(date);
+        LocalDate ld0 = toLocalDate(date);
+        Month month = ld0.getMonth();
+        int year = ld0.getYear();
+        ld0 = LocalDate.of(year, month, 1);
+        ld0 = ld0.plusMonths(1);
 
-        Calendar calNew = Calendar.getInstance();
-        calNew.clear();
-        calNew.set(Calendar.DAY_OF_MONTH, 1);
-        calNew.set(Calendar.MONTH, calSwap.get(Calendar.MONTH));
-        calNew.set(Calendar.YEAR, calSwap.get(Calendar.YEAR));
-        calNew.add(Calendar.MONTH, 1);
+        return toDate(ld0);
 
-        return calNew.getTime();
     }
 
     public static Date previousSunday(Date date) {
-        Calendar cal = Calendar.getInstance();
-        cal.clear();
-        cal.setFirstDayOfWeek(Calendar.SUNDAY);
-        cal.setTime(date);
-        cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
-        return cal.getTime();
+        LocalDate ld = toLocalDate(date);
+        LocalDate dd = ld.with(TemporalAdjusters.previous(DayOfWeek.SUNDAY));
+        return toDate(dd);
     }
 
     public static Date fromOffset(Date date, int days) {
-        Calendar calSwap = Calendar.getInstance();
-        calSwap.setTime(date);
-
-        Calendar calNew = Calendar.getInstance();
-        calNew.clear();
-        calNew.set(Calendar.YEAR, calSwap.get(Calendar.YEAR));
-        calNew.set(Calendar.MONTH, calSwap.get(Calendar.MONTH));
-        calNew.set(Calendar.DAY_OF_MONTH, calSwap.get(Calendar.DAY_OF_MONTH));
-
-        calNew.add(Calendar.DATE, days);
-
-        return calNew.getTime();
-    }
-
-    public static Date datePlusDays(Date date, int days) {
-        return fromOffset(date, days);
-    }
-
-    public static int lastDayOfMonth(Date date) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        return cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+        return toDate(toLocalDate(date).plusDays(days));
     }
 
     public static int lastDayOfMonth(Month month, int year) {
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.DAY_OF_MONTH, 1); // Need this here.
-        cal.set(Calendar.MONTH, month.getValue());
-        cal.set(Calendar.YEAR, year);
-        return cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+        LocalDate date = LocalDate.of(year, month, 1);
+        LocalDate lastDayOfMonth = date.with(TemporalAdjusters.lastDayOfMonth());
+
+        return lastDayOfMonth.getDayOfMonth();
     }
 
     public static Date lastDateOfMonth(Month month, int year) {
-        Calendar cal = Calendar.getInstance();
-        cal.clear();
-        cal.set(Calendar.DAY_OF_MONTH, 1); // Need this here.
-        cal.set(Calendar.MONTH, month.getValue());
-        cal.set(Calendar.YEAR, year);
-        cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
-        return cal.getTime();
+        LocalDate date = LocalDate.of(year, month, 1);
+        LocalDate localDate = date.with(TemporalAdjusters.lastDayOfMonth());
+
+        return toDate(localDate);
     }
 
     public static Date firstDateOfYear(int year) {
@@ -206,22 +122,14 @@ public final class Dates {
     }
 
     public static Date lastDateOfYear(Date date) {
-        Calendar cal = makeCalendar(date);
-        int year = cal.get(Calendar.YEAR);
+        LocalDate ld = toLocalDate(date);
+        int year = ld.getYear();
 
         return lastDateOfYear(year);
     }
 
     public static int dayOfMonth(Date date) {
-        return makeCalendar(date).get(Calendar.DAY_OF_MONTH);
-    }
-
-    public long elapsedSeconds(Date start, Date end) {
-        return ((end.getTime() - start.getTime()) / MILLISECONDS_PER_SECOND);
-    }
-
-    public static long elapsedDays(Date start, Date end) {
-        return ((end.getTime() - start.getTime()) / MILLISECONDS_PER_DAY);
+        return toLocalDate(date).getDayOfMonth();
     }
 
     public static java.sql.Date toSqlDate(Date date) {
@@ -249,18 +157,6 @@ public final class Dates {
         return toTimestamp(date);
     }
 
-    public static java.sql.Timestamp addDays(java.sql.Timestamp startTime, long days) {
-        startTime.setTime(startTime.getTime() + (days * MILLISECONDS_PER_DAY));
-        return startTime;
-    }
-
-    public static java.sql.Timestamp newTimestamp() {
-        Date date = newDate();
-        long milliTime = date.getTime();
-
-        return new java.sql.Timestamp(milliTime);
-    }
-
     public static String formatDate(java.util.Date date, String formatStr) {
         String result = date.toString();
 
@@ -272,7 +168,6 @@ public final class Dates {
         }
 
         return result;
-
     }
 
     // Not sure we really need this method.
@@ -280,38 +175,29 @@ public final class Dates {
         return formatDate(date, "MM/dd/yyyy");
     }
 
-    public static String formatDateString(final String dateStr, String format, String newFormat) {
-        SimpleDateFormat formatter = new SimpleDateFormat(format);
-        ParsePosition pos = new ParsePosition(0);
-        Date date = formatter.parse(dateStr, pos);
-
-        return formatDate(date, newFormat);
-    }
-
     public static int currentYear() {
-        return makeCalendar().get(Calendar.YEAR);
+        return LocalDate.now().getYear();
     }
 
     public static int yearOfDate(Date date) {
-        return makeCalendar(date).get(Calendar.YEAR);
-    }
-
-    public static Calendar makeCalendar() {
-        return Calendar.getInstance();
-    }
-
-    public static Calendar makeCalendar(Date date) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-
-        return cal;
+        return toLocalDate(date).getYear();
     }
 
     public static int dayOfWeek(Date date) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-
-        return cal.get(Calendar.DAY_OF_WEEK);
+        return toLocalDate(date).getDayOfWeek().getValue();
     }
 
+    public static LocalDate toLocalDate(Date date) {
+        if (date instanceof java.sql.Date) {
+            date = new Date(date.getTime());
+        }
+        Instant instant = date.toInstant();
+        ZoneId zoneId = zoneId();
+        ZonedDateTime zoneDateTime = instant.atZone(zoneId);
+        return zoneDateTime.toLocalDate();
+    }
+
+    public static Date toDate(LocalDate localDate) {
+        return Date.from(localDate.atStartOfDay(zoneId()).toInstant());
+    }
 }

@@ -1,9 +1,7 @@
 <div class='container-fluid'>
     <div class='row'>
         <div class='col-xs-offset-1 col-xs-10'>
-
             <h3>Frequently Asked Questions</h3>
-
             <table class='table table-bordered'>
                 <tbody>
                     <tr>
@@ -19,6 +17,10 @@
                     <tr>
                         <td align="left" valign="top">Q: Can I get the source for this project?</td>
                         <td align="left" valign="top">A: Sure thing. It is available at this <a href="https://github.com/fduckart/uh-holiday-webapp" target="_git_repo">github repository.</a></td>
+                    </tr>
+                    <tr>
+                        <td align="left" valign="top">Q: Does the state produce a holiday list?</td>
+                        <td align="left" valign="top">A: Yes, it does. <a href="http://dhrd.hawaii.gov/state-observed-holidays/" target="_hi_holidays">State Observed Holidays</a></td>
                     </tr>
                     <tr>
                         <td colspan="2" align="left" valign="top"><b>Technologies</b></td>
@@ -39,7 +41,6 @@
                     </tr>
                 </tbody>
             </table>
-
         </div>
     </div>
 </div>
