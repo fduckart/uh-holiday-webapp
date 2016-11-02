@@ -20,7 +20,7 @@
                     </tr>
                     <tr>
                         <td align="left" valign="top">Q: Does the state produce a holiday list?</td>
-                        <td align="left" valign="top">A: Yes, it does. <a href="http://dhrd.hawaii.gov/state-observed-holidays/" target="_hi_holidays">State Observed Holidays</a></td>
+                        <td align="left" valign="top">A: Yes, it does. See <a href="http://dhrd.hawaii.gov/state-observed-holidays/" target="_hi_holidays">State Observed Holidays</a>.</td>
                     </tr>
                     <tr>
                         <td colspan="2" align="left" valign="top"><b>Technologies</b></td>
