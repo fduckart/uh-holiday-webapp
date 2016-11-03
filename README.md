@@ -47,7 +47,7 @@ Here are instructions for Tomcat 8, for example:
 https://tomcat.apache.org/tomcat-8.0-doc/ssl-howto.html
 
 ##### Deploying to Production
-Copy the holiday.war file into the webapps directory of Tomcat.
+Copy the holidays.war file into the webapps directory of Tomcat.
 
 ##### Running Unit Tests
 The project includes Unit Tests for various parts of the system.
