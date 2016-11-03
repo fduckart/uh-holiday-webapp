@@ -7,14 +7,12 @@
                     <select id="yearCode" name="yearCode" ng-model="yearCode" ng-change="yearChange()">
                         <option ng-repeat="y in years">{{y}}</option>
                     </select>
-
                 </div>
             </div>
             <div class="col-xs-8">
                 &nbsp;
             </div>
         </div>
-
         <div class="row">
             <div class="col-xs-12">
                 <table class="table table-striped table-bordered table-condensed table-hover">

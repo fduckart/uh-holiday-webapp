@@ -8,10 +8,8 @@ import static org.junit.Assert.fail;
 
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.Month;
-import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -700,33 +698,6 @@ public class DatesTest {
         date = Dates.newDate(Month.DECEMBER, 30, 2013);
         String dateStr7 = Dates.formatDate(date);
         assertEquals("12/30/2013", dateStr7);
-    }
-
-    @Test
-    public void testing() {
-        LocalDate today = LocalDate.now();
-        System.out.println("Today's Local date : " + today);
-        System.out.println("Today's Local year : " + today.getYear());
-
-        Date date = new Date();
-        LocalDate ld = new java.sql.Date(date.getTime()).toLocalDate();
-        System.out.println("ld................ : " + ld);
-
-        ZoneId defaultZoneId = ZoneId.systemDefault();
-        Instant instant = date.toInstant();
-        LocalDate localDate = instant.atZone(defaultZoneId).toLocalDate();
-        System.out.println("localDate......... : " + localDate);
-
-        System.out.println("my  Month.OCTOBER: " + Month.OCTOBER.getValue());
-        System.out.println("jdk Month.OCTOBER: " + java.time.Month.OCTOBER.getValue());
-
-        System.out.println("ZoneId.systemDefault   : " + ZoneId.systemDefault());
-        System.out.println("ZoneId.of              : " + ZoneId.of("Pacific/Honolulu"));
-        //System.out.println("ZoneId.systemDefault.id: " + ZoneId.getAvailableZoneIds());
-        System.out.println("ZoneId.SHORT_IDS       : " + ZoneId.SHORT_IDS.keySet());
-        System.out.println("ZoneId.SHORT_IDS.hst   : " + ZoneId.SHORT_IDS.get("HST"));
-
-        System.out.println(Strings.fill('v', 99));
     }
 
     @Test
