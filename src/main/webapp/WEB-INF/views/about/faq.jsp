@@ -15,7 +15,7 @@
                         <td colspan="2" align="left" valign="top"><b>Resources</b></td>
                     </tr>
                     <tr>
-                        <td align="left" valign="top">Q: Can I get the source for this project?</td>
+                        <td align="left" valign="top">Q: Can I get the source code for this project?</td>
                         <td align="left" valign="top">A: Sure thing. It is available at this <a href="https://github.com/fduckart/uh-holiday-webapp" target="_git_repo">github repository.</a></td>
                     </tr>
                     <tr>

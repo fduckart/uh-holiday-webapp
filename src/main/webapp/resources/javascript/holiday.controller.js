@@ -25,11 +25,6 @@
             }, url);
 
         };
-
-        $scope.yearChange = function() {
-            console.log('year changed: ' + $scope.yearCode);
-        };
-
     }
     holidayApp.controller("HolidayJsController", HolidayJsController);
 
