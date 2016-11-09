@@ -12,6 +12,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import edu.hawaii.its.holiday.util.Dates;
 
@@ -34,10 +35,12 @@ public class Holiday implements Serializable {
 
     @Column(name = "observed_date")
     @Temporal(TemporalType.DATE)
+    @JsonSerialize(using = HolidayDateSerializer.class)
     private Date observedDate;
 
     @Column(name = "official_date")
     @Temporal(TemporalType.DATE)
+    @JsonSerialize(using = HolidayDateSerializer.class)
     private Date officialDate;
 
     public Integer getId() {

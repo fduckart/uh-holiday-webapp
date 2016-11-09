@@ -71,8 +71,8 @@ public class HolidayService {
                 + "order by a.observedDate desc";
 
         return em.createQuery(qlString, Holiday.class)
-                .setParameter("start", Dates.firstDateOfYear(year))
-                .setParameter("end", Dates.lastDateOfYear(year))
+                .setParameter("start", Dates.toDate(Dates.firstDateOfYear(year)))
+                .setParameter("end", Dates.toDate(Dates.lastDateOfYear(year)))
                 .getResultList();
     }
 

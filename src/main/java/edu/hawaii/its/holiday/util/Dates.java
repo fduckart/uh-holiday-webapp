@@ -1,168 +1,97 @@
 package edu.hawaii.its.holiday.util;
 
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
 
 public final class Dates {
+
+    public static final String DATE_FORMAT = "MMMM dd, yyyy";
 
     // Private constructor; prevent instantiation.
     private Dates() {
         // Emtpy.
     }
 
-    public static LocalDate newLocalDate(Month month, int day, int year) {
+    public static LocalDate newLocalDate(int year, Month month, int day) {
         return LocalDate.of(year, month, day);
     }
 
-    public static Date newDate(Month month, int day, int year) {
-        LocalDate localDate = LocalDate.of(year, month, day);
-        return toDate(localDate);
+    public static Month month(LocalDate date) {
+        return date.getMonth();
     }
 
-    private static ZoneId zoneId() {
-        return ZoneId.systemDefault();
+    public static LocalDate firstOfYear(LocalDate date) {
+        return newLocalDate(date.getYear(), Month.JANUARY, 1);
     }
 
-    public static Date newDate(Date date) {
-        return dateWithoutTime(date);
+    public static LocalDate firstOfNextYear(LocalDate date) {
+        return newLocalDate(date.getYear() + 1, Month.JANUARY, 1);
     }
 
-    private static Date dateWithoutTime(Date date) {
-        if (date == null) {
-            return null;
-        }
-
-        if (date instanceof java.sql.Date) {
-            date = new Date(date.getTime());
-        }
-
-        LocalDate localDate = toLocalDate(date);
-
-        return toDate(localDate);
+    public static LocalDate firstOfPreviousYear(LocalDate date) {
+        return newLocalDate(date.getYear() - 1, Month.JANUARY, 1);
     }
 
-    public static int month(Date date) {
-        return toLocalDate(date).getMonthValue();
-    }
-
-    public static Date firstOfYear(Date date) {
-        int year = Dates.yearOfDate(date);
-        return newDate(Month.JANUARY, 1, year);
-    }
-
-    public static Date firstOfNextYear(Date date) {
-        int year = Dates.yearOfDate(date) + 1;
-        return newDate(Month.JANUARY, 1, year);
-    }
-
-    public static Date firstOfPreviousYear(Date date) {
-        LocalDate ld = toLocalDate(date);
-        int year = ld.getYear() - 1;
-
-        return newDate(Month.JANUARY, 1, year);
-    }
-
-    public static Date firstOfMonth(Month month, int year) {
+    public static LocalDate firstOfMonth(Month month, int year) {
         return firstDateOfMonth(month, year);
     }
 
-    public static Date firstDateOfMonth(Month month, int year) {
-        return newDate(month, 1, year);
+    public static LocalDate firstDateOfMonth(Month month, int year) {
+        return newLocalDate(year, month, 1);
     }
 
-    public static Date firstOfNextMonth(Date date) {
-        LocalDate ld0 = toLocalDate(date);
-        Month month = ld0.getMonth();
-        int year = ld0.getYear();
-        ld0 = LocalDate.of(year, month, 1);
-        ld0 = ld0.plusMonths(1);
-
-        return toDate(ld0);
-
+    public static LocalDate firstOfNextMonth(LocalDate date) {
+        return newLocalDate(date.getYear(), date.getMonth(), 1).plusMonths(1);
     }
 
-    public static Date previousSunday(Date date) {
-        LocalDate ld = toLocalDate(date);
-        LocalDate dd = ld.with(TemporalAdjusters.previous(DayOfWeek.SUNDAY));
-        return toDate(dd);
+    public static LocalDate previousSunday(LocalDate date) {
+        return date.with(TemporalAdjusters.previous(DayOfWeek.SUNDAY));
     }
 
-    public static Date fromOffset(Date date, int days) {
-        return toDate(toLocalDate(date).plusDays(days));
+    public static LocalDate fromOffset(LocalDate date, int days) {
+        return date.plusDays(days);
     }
 
     public static int lastDayOfMonth(Month month, int year) {
-        LocalDate date = LocalDate.of(year, month, 1);
-        LocalDate lastDayOfMonth = date.with(TemporalAdjusters.lastDayOfMonth());
-
-        return lastDayOfMonth.getDayOfMonth();
+        return LocalDate.of(year, month, 1)
+                .with(TemporalAdjusters.lastDayOfMonth())
+                .getDayOfMonth();
     }
 
-    public static Date lastDateOfMonth(Month month, int year) {
-        LocalDate date = LocalDate.of(year, month, 1);
-        LocalDate localDate = date.with(TemporalAdjusters.lastDayOfMonth());
-
-        return toDate(localDate);
+    public static LocalDate lastDateOfMonth(Month month, int year) {
+        return LocalDate.of(year, month, 1)
+                .with(TemporalAdjusters.lastDayOfMonth());
     }
 
-    public static Date firstDateOfYear(int year) {
-        return newDate(Month.JANUARY, 1, year);
+    public static LocalDate firstDateOfYear(int year) {
+        return newLocalDate(year, Month.JANUARY, 1);
     }
 
-    public static Date lastDateOfYear(int year) {
-        return newDate(Month.DECEMBER, 31, year);
+    public static LocalDate lastDateOfYear(int year) {
+        return newLocalDate(year, Month.DECEMBER, 31);
     }
 
-    public static Date lastDateOfYear(Date date) {
-        LocalDate ld = toLocalDate(date);
-        int year = ld.getYear();
-
-        return lastDateOfYear(year);
+    public static LocalDate lastDateOfYear(LocalDate date) {
+        return lastDateOfYear(date.getYear());
     }
 
-    public static int dayOfMonth(Date date) {
-        return toLocalDate(date).getDayOfMonth();
+    public static int dayOfMonth(LocalDate date) {
+        return date.getDayOfMonth();
     }
 
-    public static java.sql.Date toSqlDate(Date date) {
-        if (date == null) {
-            return null;
-        }
-        return new java.sql.Date(date.getTime());
-    }
-
-    private static java.sql.Timestamp toTimestamp(Date date) {
-        if (date == null) {
-            return null; // Not good.
-        }
-        return new java.sql.Timestamp(date.getTime());
-    }
-
-    public static java.sql.Timestamp toTimestamp(String dateStr, String format) {
-        Date date = null;
-        try {
-            SimpleDateFormat formatter = new SimpleDateFormat(format);
-            date = formatter.parse(dateStr, new ParsePosition(0));
-        } catch (Exception ex) {
-            // Ignored.
-        }
-        return toTimestamp(date);
-    }
-
-    public static String formatDate(java.util.Date date, String formatStr) {
+    public static String formatDate(LocalDate date, String formatStr) {
         String result = date.toString();
 
         try {
-            SimpleDateFormat formatter = new SimpleDateFormat(formatStr);
-            result = formatter.format(date);
+            DateTimeFormatter formatteR = DateTimeFormatter.ofPattern(formatStr);
+            result = date.format(formatteR);
         } catch (IllegalArgumentException e) {
             // Ignored.
         }
@@ -171,8 +100,13 @@ public final class Dates {
     }
 
     // Not sure we really need this method.
-    public static String formatDate(java.util.Date date) {
-        return formatDate(date, "MM/dd/yyyy");
+    public static String formatDate(LocalDate date) {
+        ///return formatDate(date, "MM/dd/yyyy");
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        String text = date.format(formatter);
+        ///LocalDate parsedDate = LocalDate.parse(text, formatter);        
+        return text;
     }
 
     public static int currentYear() {
@@ -183,8 +117,16 @@ public final class Dates {
         return toLocalDate(date).getYear();
     }
 
-    public static int dayOfWeek(Date date) {
-        return toLocalDate(date).getDayOfWeek().getValue();
+    public static int yearOfDate(LocalDate date) {
+        return date.getYear();
+    }
+
+    public static DayOfWeek dayOfWeek(LocalDate date) {
+        return date.getDayOfWeek();
+    }
+
+    private static ZoneId zoneId() {
+        return ZoneId.systemDefault();
     }
 
     public static LocalDate toLocalDate(Date date) {

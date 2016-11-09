@@ -56,16 +56,6 @@ public class HomeControllerSystemTest {
         assertNotNull(homeController);
     }
 
-    //    @Test
-    //    public void testController() {
-    //        Model model = new ExtendedModelMap();
-    //
-    //        assertEquals("gate", homeController.gate(Locale.US, model));
-    //
-    //        assertFalse(model.asMap().entrySet().isEmpty());
-    //        assertTrue(model.asMap().keySet().contains("systemMessage"));
-    //    }
-
     @Test
     public void requestUrlDenied() throws Exception {
         mockMvc.perform(get("/denied"))

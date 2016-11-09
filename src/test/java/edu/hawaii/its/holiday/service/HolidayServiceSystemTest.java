@@ -1,5 +1,6 @@
 package edu.hawaii.its.holiday.service;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -7,7 +8,12 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,6 +24,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import edu.hawaii.its.holiday.configuration.CachingConfig;
 import edu.hawaii.its.holiday.configuration.DatabaseConfig;
 import edu.hawaii.its.holiday.configuration.WebConfig;
@@ -25,6 +33,7 @@ import edu.hawaii.its.holiday.type.Holiday;
 import edu.hawaii.its.holiday.type.HolidayType;
 import edu.hawaii.its.holiday.type.Type;
 import edu.hawaii.its.holiday.type.UserRole;
+import edu.hawaii.its.holiday.util.Dates;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -135,4 +144,27 @@ public class HolidayServiceSystemTest {
         assertEquals("ROLE_USER", userRoles.get(1).getAuthority());
     }
 
+    @Test
+    public void dateFormatting() throws Exception {
+        final String DATE_FORMAT = Dates.DATE_FORMAT;
+
+        SimpleDateFormat df = new SimpleDateFormat(DATE_FORMAT);
+        df.setTimeZone(TimeZone.getTimeZone("HST"));
+
+        String toParse = "December 20, 2014";
+        Date obsDate = df.parse(toParse);
+        assertNotNull(obsDate);
+
+        LocalDate localDate = Dates.newLocalDate(2014, Month.DECEMBER, 20);
+        obsDate = Dates.toDate(localDate);
+        Date offDate = Dates.toDate(localDate.plusDays(200));
+
+        Holiday holiday = new Holiday();
+        holiday.setObservedDate(obsDate);
+        holiday.setOfficialDate(offDate);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String result = mapper.writeValueAsString(holiday);
+        assertThat(result, containsString(toParse));
+    }
 }
