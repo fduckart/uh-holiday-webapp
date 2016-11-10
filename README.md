@@ -85,7 +85,7 @@ To run the System Tests:
 
 **Running the Application locally**
 
-http://localhost:8080/holiday/
+http://localhost:8080/holidays/
 
 **Important Note**
 
