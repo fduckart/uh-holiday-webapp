@@ -14,8 +14,8 @@
                         <thead>
                             <tr>
                                 <th>Holiday</th>
-                                <th>Observed</th>
-                                <th>Official</th>
+                                <th>Observed Date</th>
+                                <th>Official Date</th>
                             </tr>
                         </thead>
                         <tbody>
