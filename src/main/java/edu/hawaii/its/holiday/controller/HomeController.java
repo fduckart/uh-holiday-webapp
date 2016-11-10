@@ -37,33 +37,9 @@ public class HomeController {
     private UserContextService userContextService;
 
     @RequestMapping(value = { "", "/" }, method = { RequestMethod.GET, RequestMethod.POST })
-    public String gate(Locale locale,
-            Model model,
-            @ModelAttribute("holidayHolder") YearHolidayHolder holder,
-            BindingResult result) {
-
-        logger.info("User at gate. The client locale is {}.", locale);
-
-        try {
-            Integer year = yearValue(result);
-            holder = createYearHolidayHolder(year);
-            model.addAttribute("holidayHolder", holder);
-        } catch (Exception e) {
-            logger.error("Error", e);
-        }
-
-        return "gate";
-    }
-
-    protected Integer yearValue(BindingResult result) {
-        Integer year;
-        try {
-            String yearStr = (String) result.getFieldValue("year");
-            year = Integer.valueOf(yearStr);
-        } catch (Exception ex) {
-            year = Integer.valueOf(Dates.currentYear());
-        }
-        return year;
+    public String main(Locale locale) {
+        logger.info("User at main. The client locale is {}.", locale);
+        return "main";
     }
 
     @PreAuthorize("hasRole('ROLE_UH')")
@@ -94,9 +70,29 @@ public class HomeController {
         return holder;
     }
 
-    @RequestMapping(value = "/ex", method = RequestMethod.GET)
-    public String experiment(Locale locale) {
-        return "experiment";
+    @RequestMapping(value = "/gate", method = { RequestMethod.GET, RequestMethod.POST })
+    public String gate(Locale locale, Model model,
+            @ModelAttribute("holidayHolder") YearHolidayHolder holder,
+            BindingResult result) {
+        try {
+            Integer year = yearValue(result);
+            holder = createYearHolidayHolder(year);
+            model.addAttribute("holidayHolder", holder);
+        } catch (Exception e) {
+            logger.error("Error", e);
+        }
+        return "gate";
+    }
+
+    protected Integer yearValue(BindingResult result) {
+        Integer year;
+        try {
+            String yearStr = (String) result.getFieldValue("year");
+            year = Integer.valueOf(yearStr);
+        } catch (Exception ex) {
+            year = Integer.valueOf(Dates.currentYear());
+        }
+        return year;
     }
 
     @RequestMapping(value = "/contact", method = RequestMethod.GET)

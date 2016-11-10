@@ -6,7 +6,7 @@
     <div class='row'>
         <div class="col-xs-12" style='padding-top: 10px;'>
             <c:if test="${not empty holidayHolder.years}">
-                <c:url var="formAction"  value="${contextPath}/" />
+                <c:url var="formAction"  value="${contextPath}/gate" />
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <form:form id="form" method="POST" action="${formAction}" modelAttribute="holidayHolder">
