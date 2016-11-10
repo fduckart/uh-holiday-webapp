@@ -5,8 +5,8 @@
         $scope.years = [];
 
         $scope.init = function() {
-            date = new Date();
-            year = date.getFullYear();
+            var date = new Date();
+            var year = date.getFullYear();
             $scope.yearCode = year.toString();
             $scope.maxYear = year;
             $scope.years = [];
@@ -16,8 +16,7 @@
                 $scope.holidays = data;
                 for (var i = 0; i < data.length; i++) {
                     var y = parseInt(data[i].year);
-                    var idx = $scope.years.indexOf(y);
-                    if (idx < 0) {
+                    if ($scope.years.indexOf(y) < 0) {
                         $scope.years.push(y);
                     }
                 }
