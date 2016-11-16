@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "UNIQUE_UH_NUMBER_V", schema = "UHAPP_DB")
+@Table(name = "UNIQUE_UH_NUMBER_V")
 public class Employee implements Serializable {
 
     public static final long serialVersionUID = 2L;

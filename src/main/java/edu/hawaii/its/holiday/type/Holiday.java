@@ -35,8 +35,8 @@ public class Holiday implements Serializable {
     @Column(name = "id")
     private Integer id;
 
-    @JsonIgnore
     @Column(name = "version")
+    @JsonIgnore
     private Integer version;
 
     @Column(name = "description")
@@ -58,14 +58,6 @@ public class Holiday implements Serializable {
                inverseJoinColumns = @JoinColumn(name = "type_id", unique = false))
     @OrderBy(value = "id")
     private List<Type> types = new ArrayList<Type>(0);
-
-    public List<Type> getTypes() {
-        return types;
-    }
-
-    public void setTypes(List<Type> types) {
-        this.types = types;
-    }
 
     public Integer getId() {
         return id;
@@ -105,6 +97,14 @@ public class Holiday implements Serializable {
 
     public void setOfficialDate(Date officialDate) {
         this.officialDate = officialDate;
+    }
+
+    public List<Type> getTypes() {
+        return types;
+    }
+
+    public void setTypes(List<Type> types) {
+        this.types = types;
     }
 
     @Transient

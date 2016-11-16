@@ -18,10 +18,6 @@
     <div class='row'>
         <div class='col-xs-offset-1 col-xs-10'>
             <h3>Administration</h3>
-            <hr/>
-            <a href="<c:url value="/admin/actions" />">View Action codes</a><br/>                
-            <br>
-            <hr/>
             <p>
                 This project includes some exception handling that is <br/>
                 able to be handled at the controller level.<br/>

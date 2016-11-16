@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import edu.hawaii.its.holiday.access.User;
-import edu.hawaii.its.holiday.action.ActionRecorder;
 import edu.hawaii.its.holiday.security.UserContextService;
 import edu.hawaii.its.holiday.service.HolidayService;
 import edu.hawaii.its.holiday.type.Holiday;
@@ -26,9 +25,6 @@ import edu.hawaii.its.holiday.util.Dates;
 public class HomeController {
 
     private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-
-    @Autowired
-    private ActionRecorder actionRecorder;
 
     @Autowired
     private HolidayService holidayService;
@@ -50,7 +46,6 @@ public class HomeController {
 
         User user = userContextService.getCurrentUser();
         logger.info("current user    : " + user);
-        actionRecorder.publish("employee.view.home", user.getUhuuid());
         model.addAttribute("currentUser", user);
 
         logger.info("Leaving attributes.");
@@ -117,9 +112,5 @@ public class HomeController {
 
     public void setUserContextService(UserContextService userContextService) {
         this.userContextService = userContextService;
-    }
-
-    public void setActionRecorder(ActionRecorder actionRecorder) {
-        this.actionRecorder = actionRecorder;
     }
 }

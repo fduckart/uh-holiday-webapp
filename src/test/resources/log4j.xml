@@ -15,10 +15,6 @@
         <level value="debug" />
     </logger>
     
-    <logger name="edu.hawaii.its.holiday.action.ActionListenerImpl">
-        <level value="info" />
-    </logger>
-        
     <!-- 3rdparty Loggers -->
     <logger name="org.springframework.core">
         <level value="info" />
