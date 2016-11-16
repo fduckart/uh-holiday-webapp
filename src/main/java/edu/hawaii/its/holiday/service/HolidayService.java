@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.hawaii.its.holiday.type.Holiday;
-import edu.hawaii.its.holiday.type.HolidayType;
 import edu.hawaii.its.holiday.type.Type;
 import edu.hawaii.its.holiday.type.UserRole;
 import edu.hawaii.its.holiday.util.Dates;
@@ -37,15 +36,6 @@ public class HolidayService {
 
     @Transactional(readOnly = true)
     @Cacheable(value = "holidayTypesById", key = "#id")
-    public HolidayType findHolidayType(Integer id) {
-        String qlString = "select a from HolidayType a "
-                + "where a.id = :id";
-        return em.createQuery(qlString, HolidayType.class)
-                .setParameter("id", id)
-                .getSingleResult();
-    }
-
-    @Transactional(readOnly = true)
     public Type findType(Integer id) {
         return em.find(Type.class, id);
     }
@@ -85,10 +75,10 @@ public class HolidayService {
 
     @Transactional(readOnly = true)
     @Cacheable(value = "holidayTypes")
-    public List<HolidayType> findHolidayTypes() {
+    public List<Type> findHolidayTypes() {
         String qlString = "select a from HolidayType a "
                 + "order by a.typeId, a.holidayId";
-        return em.createQuery(qlString, HolidayType.class).getResultList();
+        return em.createQuery(qlString, Type.class).getResultList();
     }
 
     @Transactional(readOnly = true)

@@ -1,23 +1,32 @@
 package edu.hawaii.its.holiday.type;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import edu.hawaii.its.holiday.util.Dates;
 
 @Entity
 @Table(name = "holiday")
+@JsonRootName(value = "data")
 public class Holiday implements Serializable {
 
     public static final long serialVersionUID = 53L;
@@ -42,6 +51,21 @@ public class Holiday implements Serializable {
     @Temporal(TemporalType.DATE)
     @JsonSerialize(using = HolidayDateSerializer.class)
     private Date officialDate;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "holiday_type",
+               joinColumns = @JoinColumn(name = "holiday_id", unique = false),
+               inverseJoinColumns = @JoinColumn(name = "type_id", unique = false))
+    @OrderBy(value = "id")
+    private List<Type> types = new ArrayList<Type>(0);
+
+    public List<Type> getTypes() {
+        return types;
+    }
+
+    public void setTypes(List<Type> types) {
+        this.types = types;
+    }
 
     public Integer getId() {
         return id;
@@ -136,10 +160,13 @@ public class Holiday implements Serializable {
 
     @Override
     public String toString() {
-        return "Holiday [ "
-                + "description=" + description
+        return "Holiday ["
+                + "id=" + id
+                + ", description=" + description
                 + ", observedDate=" + observedDate
                 + ", officialDate=" + officialDate
+                + ", types=" + types
                 + "]";
     }
+
 }

@@ -7,6 +7,8 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.time.Month;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Test;
@@ -16,6 +18,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+
+import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import edu.hawaii.its.holiday.configuration.CachingConfig;
 import edu.hawaii.its.holiday.configuration.DatabaseConfig;
@@ -74,5 +79,20 @@ public class HolidayRestControllerSystemTest {
         assertEquals("New Year's Day", h1.getDescription());
         assertEquals(Dates.newLocalDate(2011, Month.JANUARY, 1), Dates.toLocalDate(h1.getOfficialDate()));
         assertEquals(Dates.newLocalDate(2010, Month.DECEMBER, 31), Dates.toLocalDate(h1.getObservedDate()));
+    }
+
+    @Test
+    public void testPersistAndFindById() throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        Holiday holiday = new Holiday();
+        holiday.setDescription("Burrito");
+        holiday.setObservedDate(new Date());
+        holiday.setOfficialDate(new Date());
+
+        List<Holiday> list = new ArrayList<Holiday>();
+        list.add(holiday);
+        String rootName = Holiday.class.getAnnotation(JsonRootName.class).value();
+        System.out.println(mapper.writer().withRootName(rootName).writeValueAsString(list));
+
     }
 }

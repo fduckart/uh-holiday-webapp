@@ -13,12 +13,16 @@ public class Type implements Serializable {
 
     public static final long serialVersionUID = 43L;
 
-    private Integer id;
-    private Integer version;
-    private String description;
-
     @Id
     @Column(name = "id")
+    private Integer id;
+
+    @Column(name = "version")
+    private Integer version;
+
+    @Column(name = "description")
+    private String description;
+
     public Integer getId() {
         return id;
     }
@@ -27,7 +31,6 @@ public class Type implements Serializable {
         this.id = id;
     }
 
-    @Column(name = "version")
     public Integer getVersion() {
         return version;
     }
@@ -36,7 +39,6 @@ public class Type implements Serializable {
         this.version = version;
     }
 
-    @Column(name = "description")
     public String getDescription() {
         return description;
     }
@@ -49,7 +51,6 @@ public class Type implements Serializable {
     public String toString() {
         return "Type ["
                 + "id=" + id
-                + ", version=" + version
                 + ", description=" + description
                 + "]";
     }

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import edu.hawaii.its.holiday.service.HolidayService;
 import edu.hawaii.its.holiday.type.Holiday;
-import edu.hawaii.its.holiday.type.HolidayType;
+import edu.hawaii.its.holiday.type.Type;
 
 @RestController
 public class HolidayRestController {
@@ -47,9 +47,9 @@ public class HolidayRestController {
     @RequestMapping(value = "/api/types",
                     method = RequestMethod.GET,
                     produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<HolidayType>> holidayTypes() {
-        logger.info("Entered REST holidayTypes...");
-        List<HolidayType> types = holidayService.findHolidayTypes();
+    public ResponseEntity<List<Type>> types() {
+        logger.info("Entered REST types...");
+        List<Type> types = holidayService.findTypes();
         return ResponseEntity
                 .ok()
                 .body(types);
