@@ -162,21 +162,21 @@ public class HolidayServiceSystemTest {
         Holiday h4 = holidayService.findHoliday(4);
         assertEquals("Prince Kuhio Day", h4.getDescription());
 
-        assertEquals(3, h1.getTypes().size());
-        assertEquals(3, h2.getTypes().size());
-        assertEquals(2, h4.getTypes().size());
+        assertEquals(3, h1.getHolidayTypes().size());
+        assertEquals(3, h2.getHolidayTypes().size());
+        assertEquals(2, h4.getHolidayTypes().size());
 
-        List<Type> types = h1.getTypes();
+        List<Type> types = h1.getHolidayTypes();
         assertThat(types.get(0).getId(), equalTo(1));
         assertThat(types.get(1).getId(), equalTo(2));
         assertThat(types.get(2).getId(), equalTo(3));
 
-        types = h2.getTypes();
+        types = h2.getHolidayTypes();
         assertThat(types.get(0).getId(), equalTo(1));
         assertThat(types.get(1).getId(), equalTo(2));
         assertThat(types.get(2).getId(), equalTo(3));
 
-        types = h4.getTypes();
+        types = h4.getHolidayTypes();
         assertThat(types.get(0).getId(), equalTo(3));
         assertThat(types.get(1).getId(), equalTo(4));
     }

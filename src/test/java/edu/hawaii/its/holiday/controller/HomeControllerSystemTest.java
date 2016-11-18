@@ -3,6 +3,7 @@ package edu.hawaii.its.holiday.controller;
 import static org.junit.Assert.assertNotNull;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
@@ -73,9 +74,13 @@ public class HomeControllerSystemTest {
     @Test
     @WithAnonymousUser
     public void attributesViaAnonymous() throws Exception {
+        String expectedUrl = "https://cas-test.its.hawaii.edu/cas/login"
+                + "?service=http%3A%2F%2Flocalhost%3A8080%2Fholidays%2Flogin%2Fcas";
+
         // Anonymous users not allowed here.
         mockMvc.perform(get("/attributes"))
-                .andExpect(status().is3xxRedirection());
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl(expectedUrl));
     }
 
     @Test

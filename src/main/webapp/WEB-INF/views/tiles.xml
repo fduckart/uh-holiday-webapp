@@ -29,11 +29,7 @@
     </definition>
         
     <definition name="denied" extends="baseSimple">
-        <put-attribute name="body" value="/WEB-INF/views/gate/denied.jsp" />
-    </definition>
-        
-    <definition name="gate" extends="baseSimple">
-        <put-attribute name="body" value="/WEB-INF/views/gate/gate.jsp" />
+        <put-attribute name="body" value="/WEB-INF/views/main/denied.jsp" />
     </definition>
         
     <definition name="admin" extends="baseSimple">

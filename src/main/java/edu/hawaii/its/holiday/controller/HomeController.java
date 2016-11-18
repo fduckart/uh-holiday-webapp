@@ -32,7 +32,7 @@ public class HomeController {
     @Autowired
     private UserContextService userContextService;
 
-    @RequestMapping(value = { "", "/" }, method = { RequestMethod.GET, RequestMethod.POST })
+    @RequestMapping(value = { "", "/", "/home" }, method = { RequestMethod.GET })
     public String main(Locale locale) {
         logger.info("User at main. The client locale is {}.", locale);
         return "main";
@@ -41,7 +41,6 @@ public class HomeController {
     @PreAuthorize("hasRole('ROLE_UH')")
     @RequestMapping(value = { "/attributes" }, method = { RequestMethod.GET })
     public String attributes(Locale locale, Model model) {
-
         logger.info("Entered attributes...");
 
         User user = userContextService.getCurrentUser();
@@ -63,20 +62,6 @@ public class HomeController {
         }
 
         return holder;
-    }
-
-    @RequestMapping(value = "/gate", method = { RequestMethod.GET, RequestMethod.POST })
-    public String gate(Locale locale, Model model,
-            @ModelAttribute("holidayHolder") YearHolidayHolder holder,
-            BindingResult result) {
-        try {
-            Integer year = yearValue(result);
-            holder = createYearHolidayHolder(year);
-            model.addAttribute("holidayHolder", holder);
-        } catch (Exception e) {
-            logger.error("Error", e);
-        }
-        return "gate";
     }
 
     protected Integer yearValue(BindingResult result) {

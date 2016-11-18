@@ -54,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private boolean casSendRenew;
 
     @Autowired
-    private UserDetailsServiceImpl holidayUserDetailsService;
+    private UserDetailsServiceImpl userDetailsService;
 
     @PostConstruct
     public void init() {
@@ -100,7 +100,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public CasAuthenticationProvider casAuthenticationProvider() {
         CasAuthenticationProvider provider = new CasAuthenticationProvider();
         provider.setKey("an_id_for_this_auth_provider_only");
-        provider.setAuthenticationUserDetailsService(holidayUserDetailsService);
+        provider.setAuthenticationUserDetailsService(userDetailsService);
         provider.setServiceProperties(serviceProperties());
 
         Saml11TicketValidator ticketValidator = new Saml11TicketValidator(casMainUrl);
@@ -117,13 +117,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         SimpleUrlAuthenticationFailureHandler authenticationFailureHandler =
                 new SimpleUrlAuthenticationFailureHandler();
-        authenticationFailureHandler.setDefaultFailureUrl("/gate");
+        authenticationFailureHandler.setDefaultFailureUrl("/home");
         filter.setAuthenticationFailureHandler(authenticationFailureHandler);
 
         SavedRequestAwareAuthenticationSuccessHandler authenticationSuccessHandler =
                 new SavedRequestAwareAuthenticationSuccessHandler();
         authenticationSuccessHandler.setAlwaysUseDefaultTargetUrl(false);
-        authenticationSuccessHandler.setDefaultTargetUrl("/gate");
+        authenticationSuccessHandler.setDefaultTargetUrl("/home");
         filter.setAuthenticationSuccessHandler(authenticationSuccessHandler);
 
         ServiceAuthenticationDetailsSource authenticationDetailsSource =
@@ -149,9 +149,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/**").permitAll()
                 .antMatchers("/resources/**").permitAll()
                 .antMatchers("/contact").permitAll()
-                .antMatchers("/old").permitAll()
                 .antMatchers("/faq").permitAll()
-                .antMatchers("/gate").permitAll()
+                .antMatchers("/home").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/logout").permitAll()
                 .antMatchers("/denied").permitAll()

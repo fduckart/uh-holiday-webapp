@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 @Entity
 @Table(name = "type")
@@ -49,6 +50,11 @@ public class Type implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @JsonValue
+    public String toJson() {
+        return description;
     }
 
     @Override

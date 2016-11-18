@@ -16,19 +16,23 @@
     </logger>
     
     <!-- 3rdparty Loggers -->
+    <logger name="org.springframework">
+        <level value="warn" />
+    </logger>    
+    
     <logger name="org.springframework.core">
-        <level value="info" />
+        <level value="warn" />
     </logger>    
     
     <logger name="org.springframework.beans">
-        <level value="info" />
+        <level value="warn" />
     </logger>
     <logger name="org.springframework.beans.factory.support.DefaultListableBeanFactory">
         <level value="warn" />
     </logger>
     
     <logger name="org.springframework.context">
-        <level value="info" />
+        <level value="warn" />
     </logger>
 
     <logger name="org.springframework.web">
@@ -41,19 +45,19 @@
         
     <!--  Suppress some weird errors happening during testing. -->
     <logger name="org.hibernate">
-        <level value="info" />    
+        <level value="warn" />    
     </logger>
     <logger name="org.hibernate.jpa">
-        <level value="info" />    
+        <level value="warn" />    
     </logger>    
     <logger name="org.hibernate.internal">
-        <level value="info" />    
+        <level value="warn" />    
     </logger>
     <logger name="org.hibernate.ejb.packaging.AbstractJarVisitor">
-        <level value="info" />    
+        <level value="warn" />    
     </logger>    
     <logger name="org.hibernate.ejb.internal.EntityManagerFactoryRegistry">
-        <level value="info" />    
+        <level value="warn" />    
     </logger>
     <logger name="org.springframework.jdbc.datasource.embedded.HsqlEmbeddedDatabaseConfigurer">
         <level value="off" />    
@@ -61,6 +65,10 @@
     <logger name="org.springframework.beans.factory.support.DisposableBeanAdapter">
         <level value="off"/>
     </logger>
+    
+    <logger name="org.apache.tiles">
+        <level value="warn" />    
+    </logger>    
     
     <!-- Root Logger -->
     <root>
