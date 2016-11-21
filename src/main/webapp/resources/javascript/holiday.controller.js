@@ -12,7 +12,8 @@
             $scope.years = [];
             $scope.years.push(year);
 
-            dataProvider.loadData(function(data) {
+            dataProvider.loadData(function(d) {
+                var data = d.data;
                 $scope.holidays = data;
                 for (var i = 0; i < data.length; i++) {
                     var y = parseInt(data[i].year);

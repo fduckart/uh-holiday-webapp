@@ -37,6 +37,9 @@ public class HomeControllerSystemTest {
     @Value("${cas.login.url}")
     private String casLoginUrl;
 
+    @Value("${cas.send.renew}")
+    private boolean casSendRenew;
+
     @Autowired
     private HomeController homeController;
 
@@ -76,6 +79,9 @@ public class HomeControllerSystemTest {
     public void attributesViaAnonymous() throws Exception {
         String expectedUrl = "https://cas-test.its.hawaii.edu/cas/login"
                 + "?service=http%3A%2F%2Flocalhost%3A8080%2Fholidays%2Flogin%2Fcas";
+        if (casSendRenew) {
+            expectedUrl += "&renew=" + casSendRenew;
+        }
 
         // Anonymous users not allowed here.
         mockMvc.perform(get("/attributes"))

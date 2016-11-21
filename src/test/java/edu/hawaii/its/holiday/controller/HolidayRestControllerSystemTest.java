@@ -43,12 +43,12 @@ public class HolidayRestControllerSystemTest {
 
     @Test
     public void holidayById() {
-        ResponseEntity<Holiday> entity = controller.holiday(1);
+        ResponseEntity<JsonData<Holiday>> entity = controller.holiday(1);
         assertNotNull(entity);
         assertTrue(entity.hasBody());
         assertEquals(200, entity.getStatusCodeValue());
 
-        Holiday h0 = entity.getBody();
+        Holiday h0 = entity.getBody().getData();
         assertEquals("New Year's Day", h0.getDescription());
         assertEquals(Dates.newLocalDate(2013, Month.JANUARY, 1), Dates.toLocalDate(h0.getOfficialDate()));
         assertEquals(Dates.newLocalDate(2013, Month.JANUARY, 1), Dates.toLocalDate(h0.getObservedDate()));
@@ -56,19 +56,19 @@ public class HolidayRestControllerSystemTest {
         assertEquals(Dates.firstDateOfYear(2013), Dates.toLocalDate(h0.getObservedDate()));
 
         entity = controller.holiday(1);
-        Holiday h1 = entity.getBody();
+        Holiday h1 = entity.getBody().getData();
         assertEquals(h0, h1);
         assertSame(h0, h1);
     }
 
     @Test
     public void holidays() {
-        ResponseEntity<List<Holiday>> entity = controller.holidays();
-        ResponseEntity<List<Holiday>> entity0 = controller.holidays();
+        ResponseEntity<JsonData<List<Holiday>>> entity = controller.holidays();
+        ResponseEntity<JsonData<List<Holiday>>> entity0 = controller.holidays();
         assertEquals(entity, entity0);
         assertNotSame(entity, entity0); // Hmmm? 
 
-        List<Holiday> holidays = entity.getBody();
+        List<Holiday> holidays = entity.getBody().getData();
         Holiday h0 = holidays.get(0);
         assertEquals("Christmas", h0.getDescription());
         assertEquals(Dates.newLocalDate(2017, Month.DECEMBER, 25), Dates.toLocalDate(h0.getOfficialDate()));

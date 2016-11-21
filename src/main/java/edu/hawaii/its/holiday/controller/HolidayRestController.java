@@ -27,32 +27,35 @@ public class HolidayRestController {
     @RequestMapping(value = "/api/holidays",
                     method = RequestMethod.GET,
                     produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Holiday>> holidays() {
+    public ResponseEntity<JsonData<List<Holiday>>> holidays() {
         logger.info("Entered REST holidays...");
+        JsonData<List<Holiday>> data = new JsonData<>(holidayService.findHolidays());
         return ResponseEntity
                 .ok()
-                .body(holidayService.findHolidays());
+                .body(data);
     }
 
     @RequestMapping(value = "/api/holidays/{id}",
                     method = RequestMethod.GET,
                     produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Holiday> holiday(@PathVariable Integer id) {
+    public ResponseEntity<JsonData<Holiday>> holiday(@PathVariable Integer id) {
         logger.info("Entered REST holiday(" + id + ") ...");
+        JsonData<Holiday> data = new JsonData<>(holidayService.findHoliday(id));
         return ResponseEntity
                 .ok()
-                .body(holidayService.findHoliday(id));
+                .body(data);
     }
 
     @RequestMapping(value = "/api/types",
                     method = RequestMethod.GET,
                     produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Type>> types() {
+    public ResponseEntity<JsonData<List<Type>>> types() {
         logger.info("Entered REST types...");
         List<Type> types = holidayService.findTypes();
+        JsonData<List<Type>> data = new JsonData<>(types);
         return ResponseEntity
                 .ok()
-                .body(types);
+                .body(data);
     }
 
 }
