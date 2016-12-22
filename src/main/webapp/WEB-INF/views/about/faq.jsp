@@ -24,6 +24,7 @@
                     </tr>
                     <tr>
                         <td colspan="2" align="left" valign="top"><b>Technologies</b></td>
+                    </tr>
                     <tr>
                         <td align="left" valign="top">Q: What did you use to create the site?</td>
                         <td align="left" valign="top">
