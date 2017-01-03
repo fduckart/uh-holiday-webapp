@@ -17,14 +17,13 @@ public class YearHolidayHolder {
     }
 
     public YearHolidayHolder(List<Holiday> holidays) {
-        super();
         if (holidays != null && !holidays.isEmpty()) {
             for (Holiday h : holidays) {
                 add(Dates.yearOfDate(h.getObservedDate()), h);
                 add(Dates.yearOfDate(h.getOfficialDate()), h);
             }
 
-            Integer currentYear = Dates.currentYear();
+            Integer currentYear = currentYear();
             if (yearMap.containsKey(currentYear)) {
                 this.year = currentYear;
             }
@@ -70,4 +69,7 @@ public class YearHolidayHolder {
         this.year = year != null ? year.intValue() : 0;
     }
 
+    protected Integer currentYear() {
+        return Dates.currentYear();
+    }
 }

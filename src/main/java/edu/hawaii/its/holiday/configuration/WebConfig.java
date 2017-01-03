@@ -18,7 +18,7 @@ import org.springframework.web.servlet.view.tiles3.TilesView;
 
 @Configuration
 @EnableWebMvc
-@EnableTransactionManagement
+@EnableTransactionManagement(proxyTargetClass = true)
 @ComponentScan(basePackages = { "edu.hawaii.its.holiday" },
                excludeFilters = { @Filter(type = FilterType.ANNOTATION, value = Configuration.class) })
 public class WebConfig extends WebMvcConfigurerAdapter {

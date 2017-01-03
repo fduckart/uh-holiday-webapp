@@ -23,11 +23,10 @@
         <java.version>1.8</java.version>
         <junit.version>4.12</junit.version>
 
-        <org.springframework-version>4.3.2.RELEASE</org.springframework-version>
-        <org.springsecurity-version>4.1.2.RELEASE</org.springsecurity-version>
+        <org.springframework-version>4.3.4.RELEASE</org.springframework-version>
+        <org.springsecurity-version>4.1.3.RELEASE</org.springsecurity-version>
 
         <org.jasig.cas.client-version>3.4.1</org.jasig.cas.client-version>
-
         <org.aspectj-version>1.6.9</org.aspectj-version>
         <org.slf4j-version>1.6.1</org.slf4j-version>
         <commons-collections-version>3.2.1</commons-collections-version>
@@ -219,9 +218,9 @@
                     <artifactId>javassist</artifactId>
                     <groupId>jboss</groupId>
                 </exclusion>
-            </exclusions>            
+            </exclusions>
         </dependency>
-        
+
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
@@ -237,19 +236,19 @@
             <artifactId>jackson-annotations</artifactId>
             <version>${jackson.version}</version>
         </dependency>
-        
+
         <!-- Hibernate JPA Provider -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>${hibernate.version}</version>
-        </dependency>        
+        </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
             <version>${hibernate.version}</version>
-        </dependency>       
-        
+        </dependency>
+
         <!--  Eclipse related. -->
         <dependency>
             <groupId>org.antlr</groupId>
@@ -466,7 +465,7 @@
                 <version>4.3.0</version>
                 <configuration>
                     <repoToken>${UH_HOLIDAY_WEBAPP_ID}</repoToken>
-                </configuration>         
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -479,7 +478,7 @@
                     </formats>
                     <maxmem>256m</maxmem>
                     <instrumentation>
-                        <excludes>                          
+                        <excludes>
                             <exclude>edu/hawaii/its/holiday/configuration/SecurityWebApplicationInitializer.class</exclude>
                             <exclude>edu/hawaii/its/holiday/configuration/SpringWebMvcInitializer.class</exclude>
                         </excludes>
@@ -487,7 +486,7 @@
                     <!-- aggregated reports for multi-module projects -->
                     <aggregate>true</aggregate>
                 </configuration>
-            </plugin>            
+            </plugin>
         </plugins>
     </build>
     <profiles>

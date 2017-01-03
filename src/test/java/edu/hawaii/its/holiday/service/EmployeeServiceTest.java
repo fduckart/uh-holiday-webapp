@@ -14,13 +14,12 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import edu.hawaii.its.holiday.configuration.CachingConfig;
 import edu.hawaii.its.holiday.configuration.DatabaseConfig;
 import edu.hawaii.its.holiday.configuration.WebConfig;
-import edu.hawaii.its.holiday.service.EmployeeService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = { DatabaseConfig.class, WebConfig.class, CachingConfig.class })
 @DirtiesContext
-public class EmployeeServiceSystemTest {
+public class EmployeeServiceTest {
 
     @Autowired
     private EmployeeService employeeService;

@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.util.Assert;
 
 @Configuration
-@EnableTransactionManagement
+@EnableTransactionManagement(proxyTargetClass = true)
 @PropertySources({
         @PropertySource("classpath:META-INF/spring/general.properties"),
         @PropertySource("classpath:META-INF/spring/database.properties"),

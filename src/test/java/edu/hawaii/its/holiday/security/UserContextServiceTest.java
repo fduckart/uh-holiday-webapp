@@ -17,12 +17,11 @@ import edu.hawaii.its.holiday.access.User;
 import edu.hawaii.its.holiday.configuration.CachingConfig;
 import edu.hawaii.its.holiday.configuration.DatabaseConfig;
 import edu.hawaii.its.holiday.configuration.WebConfig;
-import edu.hawaii.its.holiday.security.UserContextService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = { DatabaseConfig.class, WebConfig.class, CachingConfig.class })
-public class UserContextServiceSystemTest {
+public class UserContextServiceTest {
 
     @Autowired
     private UserContextService userContextService;

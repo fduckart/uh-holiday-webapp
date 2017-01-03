@@ -38,7 +38,7 @@ import edu.hawaii.its.holiday.util.Dates;
 @WebAppConfiguration
 @ContextConfiguration(classes = { DatabaseConfig.class, WebConfig.class, CachingConfig.class })
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
-public class HolidayServiceSystemTest {
+public class HolidayServiceTest {
 
     @Autowired
     private HolidayService holidayService;

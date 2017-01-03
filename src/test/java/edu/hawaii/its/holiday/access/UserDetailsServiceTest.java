@@ -19,7 +19,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import edu.hawaii.its.holiday.access.UserDetailsServiceImpl;
 import edu.hawaii.its.holiday.configuration.CachingConfig;
 import edu.hawaii.its.holiday.configuration.DatabaseConfig;
 import edu.hawaii.its.holiday.configuration.WebConfig;
@@ -28,10 +27,10 @@ import edu.hawaii.its.holiday.configuration.WebConfig;
 @WebAppConfiguration
 @ContextConfiguration(classes = { DatabaseConfig.class, WebConfig.class, CachingConfig.class })
 @Transactional
-public class UserDetailsServiceSystemTest {
+public class UserDetailsServiceTest {
 
     @Autowired
-    private UserDetailsServiceImpl userDetailsService;
+    private UserDetailsService userDetailsService;
 
     @Test
     public void testAdminUsers() {

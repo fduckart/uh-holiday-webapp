@@ -32,7 +32,7 @@ import edu.hawaii.its.holiday.configuration.WebConfig;
         DatabaseConfig.class,
         WebConfig.class,
         CachingConfig.class })
-public class AdminControllerSystemTest {
+public class AdminControllerTest {
 
     @Value("${cas.login.url}")
     private String casLoginUrl;

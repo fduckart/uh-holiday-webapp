@@ -17,7 +17,7 @@ import edu.hawaii.its.holiday.configuration.WebConfig;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = { DatabaseConfig.class, WebConfig.class, CachingConfig.class })
-public class AdministratorServiceSystemTest {
+public class AdministratorServiceTest {
 
     @Autowired
     private AdministratorService administratorService;

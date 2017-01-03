@@ -14,9 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service("holidayUserDetailsService")
 @Transactional(readOnly = true)
-public class UserDetailsServiceImpl extends AbstractCasAssertionUserDetailsService {
+public class UserDetailsService extends AbstractCasAssertionUserDetailsService {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserDetailsService.class);
 
     @Autowired
     private UserBuilder userBuilder;

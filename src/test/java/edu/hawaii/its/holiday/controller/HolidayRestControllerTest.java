@@ -36,7 +36,7 @@ import edu.hawaii.its.holiday.util.Dates;
         DatabaseConfig.class,
         WebConfig.class,
         CachingConfig.class })
-public class HolidayRestControllerSystemTest {
+public class HolidayRestControllerTest {
 
     @Autowired
     HolidayRestController controller;

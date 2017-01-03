@@ -27,7 +27,7 @@ import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.util.Assert;
 
-import edu.hawaii.its.holiday.access.UserDetailsServiceImpl;
+import edu.hawaii.its.holiday.access.UserDetailsService;
 
 @Configuration
 @EnableWebSecurity
@@ -54,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private boolean casSendRenew;
 
     @Autowired
-    private UserDetailsServiceImpl userDetailsService;
+    private UserDetailsService userDetailsService;
 
     @PostConstruct
     public void init() {
