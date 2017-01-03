@@ -1,9 +1,16 @@
 language: java
 install: true
-script: mvn -Denv=dev clean test
 jdk:
   - oraclejdk8
+
+env:
+  - UH_HOLIDAY_WEBAPP_REPO_TOKEN=
 
 branches:
   only:
   - master
+  
+script: mvn -Denv=dev clean test
+  
+after_success:  
+  - mvn clean cobertura:cobertura coveralls:report

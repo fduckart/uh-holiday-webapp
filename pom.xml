@@ -454,11 +454,40 @@
                                 <echo>$ mvn -Denv=dev clean test -Dtest=*SystemTest </echo>
                                 <echo>$ mvn -Denv=dev clean package</echo>
                                 <echo>$ mvn -Dmaven.test.skip=true -Denv=test clean package</echo>
+                                <echo>$ mvn clean test cobertura:cobertura</echo>
                             </tasks>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.eluder.coveralls</groupId>
+                <artifactId>coveralls-maven-plugin</artifactId>
+                <version>4.3.0</version>
+                <configuration>
+                    <repoToken>${UH_HOLIDAY_WEBAPP_ID}</repoToken>
+                </configuration>         
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>2.7</version>
+                <configuration>
+                    <formats>
+                        <format>xml</format>
+                        <format>html</format>
+                    </formats>
+                    <maxmem>256m</maxmem>
+                    <instrumentation>
+                        <excludes>                          
+                            <exclude>edu/hawaii/its/holiday/configuration/SecurityWebApplicationInitializer.class</exclude>
+                            <exclude>edu/hawaii/its/holiday/configuration/SpringWebMvcInitializer.class</exclude>
+                        </excludes>
+                    </instrumentation>
+                    <!-- aggregated reports for multi-module projects -->
+                    <aggregate>true</aggregate>
+                </configuration>
+            </plugin>            
         </plugins>
     </build>
     <profiles>
