@@ -21,7 +21,6 @@
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-orm/4.3.2.RELEASE/spring-orm-4.3.2.RELEASE.jar" sourcepath="M2_REPO/org/springframework/spring-orm/4.3.2.RELEASE/spring-orm-4.3.2.RELEASE-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-webmvc/4.3.2.RELEASE/spring-webmvc-4.3.2.RELEASE.jar" sourcepath="M2_REPO/org/springframework/spring-webmvc/4.3.2.RELEASE/spring-webmvc-4.3.2.RELEASE-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-web/4.3.2.RELEASE/spring-web-4.3.2.RELEASE.jar" sourcepath="M2_REPO/org/springframework/spring-web/4.3.2.RELEASE/spring-web-4.3.2.RELEASE-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/opensymphony/ognl/2.6.11/ognl-2.6.11.jar" sourcepath="M2_REPO/opensymphony/ognl/2.6.11/ognl-2.6.11-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/security/spring-security-core/4.1.2.RELEASE/spring-security-core-4.1.2.RELEASE.jar" sourcepath="M2_REPO/org/springframework/security/spring-security-core/4.1.2.RELEASE/spring-security-core-4.1.2.RELEASE-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/security/spring-security-web/4.1.2.RELEASE/spring-security-web-4.1.2.RELEASE.jar" sourcepath="M2_REPO/org/springframework/security/spring-security-web/4.1.2.RELEASE/spring-security-web-4.1.2.RELEASE-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/security/spring-security-taglibs/4.1.2.RELEASE/spring-security-taglibs-4.1.2.RELEASE.jar" sourcepath="M2_REPO/org/springframework/security/spring-security-taglibs/4.1.2.RELEASE/spring-security-taglibs-4.1.2.RELEASE-sources.jar"/>
@@ -53,20 +52,7 @@
 	<classpathentry kind="var" path="M2_REPO/commons-beanutils/commons-beanutils/1.8.0/commons-beanutils-1.8.0.jar" sourcepath="M2_REPO/commons-beanutils/commons-beanutils/1.8.0/commons-beanutils-1.8.0-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/apache/tiles/tiles-template/3.0.5/tiles-template-3.0.5.jar" sourcepath="M2_REPO/org/apache/tiles/tiles-template/3.0.5/tiles-template-3.0.5-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/apache/tiles/tiles-autotag-core-runtime/1.1.0/tiles-autotag-core-runtime-1.1.0.jar" sourcepath="M2_REPO/org/apache/tiles/tiles-autotag-core-runtime/1.1.0/tiles-autotag-core-runtime-1.1.0-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/apache/tiles/tiles-extras/3.0.5/tiles-extras-3.0.5.jar" sourcepath="M2_REPO/org/apache/tiles/tiles-extras/3.0.5/tiles-extras-3.0.5-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/apache/tiles/tiles-freemarker/3.0.5/tiles-freemarker-3.0.5.jar" sourcepath="M2_REPO/org/apache/tiles/tiles-freemarker/3.0.5/tiles-freemarker-3.0.5-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/freemarker/freemarker/2.3.15/freemarker-2.3.15.jar" sourcepath="M2_REPO/org/freemarker/freemarker/2.3.15/freemarker-2.3.15-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/apache/tiles/tiles-velocity/3.0.5/tiles-velocity-3.0.5.jar" sourcepath="M2_REPO/org/apache/tiles/tiles-velocity/3.0.5/tiles-velocity-3.0.5-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/apache/velocity/velocity-tools/2.0/velocity-tools-2.0.jar"/>
 	<classpathentry kind="var" path="M2_REPO/oro/oro/2.0.8/oro-2.0.8.jar" sourcepath="M2_REPO/oro/oro/2.0.8/oro-2.0.8-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/apache/velocity/velocity/1.6.2/velocity-1.6.2.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/apache/tiles/tiles-el/3.0.5/tiles-el-3.0.5.jar" sourcepath="M2_REPO/org/apache/tiles/tiles-el/3.0.5/tiles-el-3.0.5-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/apache/tiles/tiles-mvel/3.0.5/tiles-mvel-3.0.5.jar" sourcepath="M2_REPO/org/apache/tiles/tiles-mvel/3.0.5/tiles-mvel-3.0.5-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/mvel/mvel2/2.0.11/mvel2-2.0.11.jar" sourcepath="M2_REPO/org/mvel/mvel2/2.0.11/mvel2-2.0.11-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/apache/tiles/tiles-ognl/3.0.5/tiles-ognl-3.0.5.jar" sourcepath="M2_REPO/org/apache/tiles/tiles-ognl/3.0.5/tiles-ognl-3.0.5-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/ognl/ognl/2.7.3/ognl-2.7.3.jar" sourcepath="M2_REPO/ognl/ognl/2.7.3/ognl-2.7.3-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/jboss/javassist/3.7.ga/javassist-3.7.ga.jar" sourcepath="M2_REPO/jboss/javassist/3.7.ga/javassist-3.7.ga-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/apache/tiles/tiles-compat/3.0.5/tiles-compat-3.0.5.jar" sourcepath="M2_REPO/org/apache/tiles/tiles-compat/3.0.5/tiles-compat-3.0.5-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/hibernate/hibernate-core/5.2.3.Final/hibernate-core-5.2.3.Final.jar"/>
 	<classpathentry kind="var" path="M2_REPO/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar" sourcepath="M2_REPO/dom4j/dom4j/1.6.1/dom4j-1.6.1-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/hibernate/javax/persistence/hibernate-jpa-2.1-api/1.0.0.Final/hibernate-jpa-2.1-api-1.0.0.Final.jar"/>
