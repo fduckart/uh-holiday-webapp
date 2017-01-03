@@ -1,8 +1,14 @@
 package edu.hawaii.its.holiday.service;
 
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,24 +22,40 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import edu.hawaii.its.holiday.configuration.CachingConfig;
 import edu.hawaii.its.holiday.configuration.DatabaseConfig;
 import edu.hawaii.its.holiday.configuration.WebConfig;
-import edu.hawaii.its.holiday.service.MessageService;
 import edu.hawaii.its.holiday.type.Message;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = { DatabaseConfig.class, WebConfig.class, CachingConfig.class })
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
-public class MessageServiceSystemTest {
+public class MessageServiceTest {
 
     @Autowired
     private MessageService messageService;
 
     @Test
-    public void find() {
+    public void findMessage() {
         Message message = messageService.findMessage(Message.GATE_MESSAGE);
         assertEquals("Y", message.getEnabled());
         assertEquals(Integer.valueOf(Message.GATE_MESSAGE), message.getTypeId());
         assertTrue(message.getText().startsWith("University of Hawaii Information"));
+
+        // No matching ID, so null returned.
+        message = messageService.findMessage(-1);
+        assertNull(message);
+
+        // Cause an internal exception to happen.
+        EntityManager em = messageService.getEntityManager();
+        messageService.setEntityManager(null);
+        message = messageService.findMessage(Message.ACCESS_DENIED_MESSAGE);
+        assertNull(message);
+
+        // Make sure the denied access message actually exists.
+        messageService.evictCache();
+        messageService.setEntityManager(em);
+        message = messageService.findMessage(Message.ACCESS_DENIED_MESSAGE);
+        assertThat(message.getId(), equalTo(Message.ACCESS_DENIED_MESSAGE));
+        assertThat(message.getText(), containsString("system is restricted"));
     }
 
     @Test

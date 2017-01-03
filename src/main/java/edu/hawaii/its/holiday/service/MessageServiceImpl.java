@@ -5,14 +5,15 @@ import javax.persistence.PersistenceContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.hawaii.its.holiday.type.Message;
 
-@Repository("messageService")
+@Service("messageService")
 public class MessageServiceImpl implements MessageService {
 
     private static final Logger logger = LoggerFactory.getLogger(MessageServiceImpl.class);
@@ -21,6 +22,15 @@ public class MessageServiceImpl implements MessageService {
     @PersistenceContext
     public void setEntityManager(EntityManager em) {
         this.em = em;
+    }
+
+    public EntityManager getEntityManager() {
+        return em;
+    }
+
+    @CacheEvict(value = "messages", allEntries = true)
+    public void evictCache() {
+        // Empty.
     }
 
     @Override
