@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>edu.hawaii.its.holiday</groupId>
-    <artifactId>holidays</artifactId>
+    <artifactId>holiday</artifactId>
     <packaging>war</packaging>
     <name>holiday</name>
     <description>Spring Boot ITS Holiday Application</description>
