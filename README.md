@@ -2,7 +2,6 @@ A web application to display holidays used by UH.
 
 [![Build Status](https://travis-ci.org/fduckart/uh-holiday-webapp.png?branch=master)](https://travis-ci.org/fduckart/uh-holiday-webapp)
 [![Coverage Status](https://coveralls.io/repos/github/fduckart/uh-holiday-webapp/badge.svg?branch=master)](https://coveralls.io/github/fduckart/uh-holiday-webapp?branch=master)
-***
 ##### Build Tool
 First, you need to download and install maven (version 3.2.1+).
 
@@ -10,10 +9,6 @@ Be sure to set up a M2_REPO environment variable.
 
 ##### Java
 You'll need a Java JDK to build and run the project (version 1.8).
-
-##### Apache Tomcat
-Install Apache Tomcat.
-This application was developed with version 8.0.32.
 
 The files for the project are kept in a code repository,
 available from here:
@@ -25,30 +20,16 @@ Install the necessary project dependencies:
 
     $ mvn install
 
-To build a deployable war file for local development:
+To run the Application from the Command Line:
+
+    $ mvn clean spring-boot:run
+
+To build a deployable war file for local development, if preferred:
 
     $ mvn clean package
 
 You should have a deployable war file in the target directory.
 Deploy as usual in a servlet container, e.g. tomcat.
-
-To build a deployable war file for a specified environment:
-
-    $ mvn -Dmaven.test.skip=true -Denv=test clean package
-
-You should have a deployable war file in the target directory.
-Deploy as usual in a servlet container.
-
-
-_Important Note:_
-If you are setting up tomcat for the first time,
-make sure you enable SSL and add any necessary certificates.
-
-Here are instructions for Tomcat 8, for example:
-https://tomcat.apache.org/tomcat-8.0-doc/ssl-howto.html
-
-##### Deploying to Production
-Copy the holidays.war file into the webapps directory of Tomcat.
 
 ##### Running Unit Tests
 The project includes Unit Tests for various parts of the system.
@@ -62,15 +43,15 @@ line arguments.
 
 To run the Unit Tests with a standard build:
 
-    $ mvn -Denv=dev clean test
+    $ mvn clean test
 
 To run a test class:
 
-    $ mvn clean test -Dtest=RoleTest
+    $ mvn clean test -Dtest=StringsTest
 
 To run a single method in a test class:
 
-    $ mvn clean test -Dtest=RoleTest#longName
+    $ mvn clean test -Dtest=StringsTest#trunctate
 
 ##### Running System Tests
 The project files include a handful of System Tests.
@@ -82,13 +63,4 @@ appropriate command line argument.
 
 To run the System Tests:
 
-    $ mvn -Denv=dev -Dtest=*SystemTest clean test
-
-**Running the Application locally**
-
-http://localhost:8080/holidays/
-
-**Important Note**
-
-The UH Number is restricted by University of Hawaii policy, so be sure not to expose it on any public page.
-
+    $ mvn -Dtest=*SystemTest clean test

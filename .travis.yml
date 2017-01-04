@@ -9,8 +9,8 @@ env:
 branches:
   only:
   - master
-  
+
 script: mvn -Denv=dev clean test
-  
-after_success:  
+
+after_success:
   - mvn clean cobertura:cobertura coveralls:report

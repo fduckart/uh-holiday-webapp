@@ -5,7 +5,6 @@ import javax.persistence.EntityManager;
 import edu.hawaii.its.holiday.type.Message;
 
 public interface MessageService {
-
     public EntityManager getEntityManager();
 
     public void setEntityManager(EntityManager em);

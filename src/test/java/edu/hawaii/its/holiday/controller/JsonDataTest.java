@@ -1,55 +1,133 @@
 package edu.hawaii.its.holiday.controller;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.Matchers.contains;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.Arrays;
+import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
+
+import edu.hawaii.its.holiday.util.Dates;
 
 public class JsonDataTest {
 
+    private JsonData<List<String>> jsonData;
+
+    @Before
+    public void setUp() {
+        List<String> broken = Arrays.asList("Everything", "Is", "Broken");
+        jsonData = new JsonData<>("bob", broken);
+    }
+
     @Test
-    public void equals() {
-        JsonData<String> s0 = new JsonData<>("test");
-        JsonData<String> s1 = new JsonData<>("test");
-        JsonData<String> s2 = new JsonData<>("nada");
-        JsonData<String> s3 = new JsonData<>(null);
-        JsonData<String> s4 = new JsonData<>(null);
+    public void construction() {
+        assertNotNull(jsonData);
 
-        assertThat(s0.getKey(), equalTo("data"));
-        assertThat(s0.getData(), equalTo("test"));
+        // Use constructor with default key value.
+        LocalDate xmas = Dates.newLocalDate(2016, Month.DECEMBER, 25);
+        JsonData<LocalDate> data = new JsonData<>(xmas);
+        assertThat(data.getKey(), equalTo("data"));
+        assertTrue(data.getData() instanceof LocalDate);
+        assertThat(data.getData(), equalTo(xmas));
+    }
 
-        assertTrue(s0.equals(s1));
-        assertTrue(s0.equals(s0));
-        assertFalse(s0.equals(s2));
-        assertFalse(s1.equals(s2));
+    @Test
+    public void setters() {
+        assertNotNull(jsonData);
+        assertNotNull(jsonData.getKey());
+        assertNotNull(jsonData.getData());
+        assertThat(jsonData.getKey(), equalTo("bob"));
+        assertThat(jsonData.getData(), contains("Everything", "Is", "Broken"));
+    }
 
-        assertTrue(s3.equals(s4));
-        assertTrue(s4.equals(s3));
+    @Test
+    public void testEquals() {
+        LocalDate d1 = Dates.newLocalDate(2016, Month.DECEMBER, 25);
+        JsonData<LocalDate> jd1 = new JsonData<>(d1);
 
-        assertFalse(s0.equals(s3));
-        assertFalse(s2.equals(s3));
-        assertFalse(s3.equals(s2));
+        LocalDate d2 = Dates.newLocalDate(2016, Month.DECEMBER, 25);
+        JsonData<LocalDate> jd2 = new JsonData<>(d2);
 
-        assertFalse(s0.equals("test"));
-        assertFalse(s1.equals(null));
+        assertEquals(jd1, jd2);
+        assertNotNull(jd1.getData());
+        assertNotNull(jd2.getData());
+        assertNotSame(jd1.getData(), jd2.getData());
+        assertTrue(jd1.equals(jd2));
+        assertTrue(jd1.equals(jd2));
+        assertTrue(jd2.equals(jd1));
+        assertEquals(jd1, jd1); // Same object.
+        assertFalse(jd1.equals(null));
 
-        JsonData<Date> d0 = new JsonData<>(new Date());
-        assertThat(d0.getKey(), equalTo("data"));
-        assertFalse(s0.equals(d0));
+        // Null key (not typical).
+        jd1 = new JsonData<>(null, d1);
+        jd2 = new JsonData<>(null, d1);
+        assertEquals(jd1, jd2);
+        assertTrue(jd1.equals(jd2));
 
-        JsonData<String> s5 = new JsonData<>("key", "sss");
-        JsonData<String> s6 = new JsonData<>("key", "sss");
-        JsonData<String> s7 = new JsonData<>(null, "sss");
-        JsonData<String> s8 = new JsonData<>("key", "ttt");
-        assertTrue(s5.equals(s6));
-        assertFalse(s6.equals(s7));
-        assertFalse(s7.equals(s6));
+        d1 = Dates.newLocalDate(2016, Month.DECEMBER, 25);
+        jd1 = new JsonData<>(d1);
+        assertFalse(jd1.equals(new String())); // Wrong type.
 
-        assertFalse(s7.equals(s8));
-        assertFalse(s8.equals(s7));
+        // Null data.
+        jd1 = new JsonData<>("key", d2);
+        jd2 = new JsonData<>("key", null);
+        assertEquals(jd1.getKey(), jd2.getKey());
+        assertNotNull(jd1.getData());
+        assertNull(jd2.getData());
+        assertThat(jd1, not(equalTo(jd2)));
+        assertThat(jd2, not(equalTo(jd1)));
+        assertFalse(jd2.equals(jd1));
+        assertFalse(jd1.equals(jd2));
+
+        LocalDate d3 = Dates.newLocalDate(2016, Month.DECEMBER, 26);
+        JsonData<LocalDate> jd3 = new JsonData<>(d3);
+        assertFalse(jd2.equals(jd3));
+        assertFalse(jd3.equals(jd2));
+
+        jd1 = new JsonData<>(null, d1);
+        jd2 = new JsonData<>(d1);
+        assertFalse(jd1.equals(jd2));
+        assertFalse(jd2.equals(jd1));
+    }
+
+    @Test
+    public void testHashCode() {
+        JsonData<LocalDate> jd1 = new JsonData<>(null);
+        JsonData<LocalDate> jd2 = new JsonData<>(null);
+        assertEquals(jd1.hashCode(), jd2.hashCode());
+
+        LocalDate d1 = Dates.newLocalDate(2016, Month.DECEMBER, 25);
+        jd1 = new JsonData<>(d1);
+
+        LocalDate d2 = Dates.newLocalDate(2016, Month.DECEMBER, 25);
+        jd2 = new JsonData<>(d2);
+
+        assertEquals(d1.hashCode(), d2.hashCode());
+        assertEquals(jd1.hashCode(), jd2.hashCode());
+        assertTrue(jd1.hashCode() > 0);
+        assertTrue(jd1.hashCode() > 0);
+
+        // Null key (not typical).
+        jd1 = new JsonData<>(null, d1);
+        jd2 = new JsonData<>(null, d1);
+        assertEquals(jd1.hashCode(), jd2.hashCode());
+    }
+
+    @Test
+    public void testToString() {
+        assertThat(jsonData.toString(), containsString("JsonData [key=bob"));
     }
 }

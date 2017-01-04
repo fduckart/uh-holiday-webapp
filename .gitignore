@@ -1,4 +1,7 @@
+.classpath
+.project
+/.settings
 /bin
 /target
 *-overrides.properties
-src/main/webapp/resources/typescript/
+src/main/resources/static/javascript/tsconfig.json
